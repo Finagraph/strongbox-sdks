@@ -30,4 +30,4 @@ Drop one of our web browser widgets into your website to get going quickly.
 
 The FinConnector allows your customer to connect their accounting system and import their financials
 
-![FinConnector Web Widget Screenshot](Images/FinConnectorWebWidget.PNG)
+![FinConnector Web Widget Screenshot](images/FinConnectorWebWidget.PNG)
