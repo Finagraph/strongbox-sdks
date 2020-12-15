@@ -30,9 +30,8 @@ The **FinConnector Web Widget** makes it simple for your customer to connect the
 
 ![FinConnector Web Widget Screenshot](images/FinConnectorWebWidget.PNG)
 
-This widget is available for [React](https://reactjs.org/)
-Quick Links
+This Web Widget is currently available for websites using [React](https://reactjs.org/). Checkout the links below to get started.
 
-- React Repository
-- React NPM package
-- React Demo
+- React Source Repository
+- React Demo Application
+- React NPM package (coming soon)
