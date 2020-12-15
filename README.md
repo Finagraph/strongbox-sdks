@@ -24,7 +24,7 @@ Our .NET SDK libraries are coming soon.
 
 Our NodeJS components are coming soon.
 
-## Front-end Widgets
+## Web Widgets
 
 Drop one of our web browser widgets into your website to get going quickly.
 
