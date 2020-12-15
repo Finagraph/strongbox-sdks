@@ -4,7 +4,7 @@ Get familiar with the REST API by reading the [Developer Guide](https://develope
 
 Get started by signing up for a developer account at [https://developer.strongbox.link](https://developer.strongbox.link).
 
-Interact with the APIs:
+## Interact with the APIs:
 
 ### Swagger UI
 
@@ -14,7 +14,7 @@ Check out the Swagger UI page for the [Strongbox Financial Suite](https://develo
 
 Postman scripts are coming soon.
 
-Develop your integration:
+## Develop your integration:
 
 ### .NET SDK
 
