@@ -12,6 +12,7 @@ Check out the Swagger UI page for the [Strongbox Financial Suite](https://develo
 
 ### Postman
 
+Postman scripts are coming soon.
 
 Develop your integration:
 
