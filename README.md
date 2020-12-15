@@ -33,4 +33,4 @@ The **FinConnector Web Widget** makes it simple for your customer to connect the
 This Web Widget is currently available for websites using [React](https://reactjs.org/). Checkout the links below to get started.
 
 - [Source Repository](https://github.com/Finagraph/strongbox-webwidgets-finconnector-react)
-- [Demo Application](https://github.com/Finagraph/strongbox-webwidgets-finconnector-react-demo)
+- [Demo Application](https://github.com/Finagraph/strongbox-webwidgets-finconnector-react/tree/master/demo)
