@@ -20,11 +20,11 @@ Postman scripts are coming soon.
 
 Our .NET SDK libraries are coming soon.
 
-### NodeJS
+### NodeJS SDK
 
 Our NodeJS components are coming soon.
 
-## Web Browser Widgets
+## Web Browser SDK
 
 Drop one of our web browser widgets into your website to get going quickly.
 
