@@ -1,4 +1,4 @@
-# Strongbox SDKS
+# Strongbox SDKs
 
 Get familiar with the REST API by reading the [Developer Guide](https://developer.strongbox.link/guides.html).
 
