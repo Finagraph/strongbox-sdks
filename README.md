@@ -21,7 +21,7 @@ Postman scripts are coming soon.
 ### NodeJS
 
 
-### Web Browser Widgets
+## Web Browser Widgets
 
 Drop one of our web browser widgets into your website to get going quickly.
 
