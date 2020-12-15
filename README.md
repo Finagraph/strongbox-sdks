@@ -18,8 +18,11 @@ Postman scripts are coming soon.
 
 ### .NET SDK
 
+Our .NET SDK libraries are coming soon.
+
 ### NodeJS
 
+Our NodeJS components are coming soon.
 
 ## Web Browser Widgets
 
