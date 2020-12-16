@@ -26,11 +26,4 @@ Our NodeJS components are coming soon.
 
 ## Web Widgets
 
-The **FinConnector Web Widget** makes it simple for your customer to connect their accounting system and to share their financials from your website.
-
-![FinConnector Web Widget Screenshot](images/FinConnectorWebWidget.PNG)
-
-This Web Widget is currently available for websites using [React](https://reactjs.org/). Checkout the links below to get started.
-
-- [Source Repository](https://github.com/Finagraph/strongbox-webwidgets-finconnector-react)
-- [Demo Application](https://github.com/Finagraph/strongbox-webwidgets-finconnector-react/tree/master/demo)
+Check out the [strongbox-webwidgets] repository to learn how to drop one of our Web Widgets into your website.
