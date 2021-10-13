@@ -1,20 +1,29 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# Strongbox SDKs
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Get familiar with the REST API by reading the [Developer Guide](https://developer.strongbox.link/guides.html).
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Get started by signing up for a developer account at [https://developer.strongbox.link](https://developer.strongbox.link).
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+## Interact with the APIs:
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+**Swagger UI**
+
+Check out the Swagger UI page for the [Strongbox Financial Suite](https://developer.strongbox.link/api-details#api=strongbox-financial-suite).
+
+**Postman**
+
+Postman scripts are coming soon.
+
+## Develop your integration:
+
+**.NET SDK**
+
+Our .NET SDK libraries are coming soon.
+
+**NodeJS SDK**
+
+Our NodeJS components are coming soon.
+
+## Web Widgets
+
+Check out the [strongbox-webwidgets](https://github.com/Finagraph/strongbox-sdks/tree/main/strongbox-webwidgets) repository to learn how to drop one of our Web Widgets into your website.

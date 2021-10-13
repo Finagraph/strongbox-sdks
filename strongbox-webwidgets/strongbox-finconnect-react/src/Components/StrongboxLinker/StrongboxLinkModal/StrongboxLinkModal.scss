@@ -1,0 +1,58 @@
+.finagraph-strongbox-linker__link-modal {
+    max-height: 800px;
+    max-width: 480px;
+    overflow: hidden;
+    -webkit-transition: max-height 600ms ease-in;
+    transition: max-height 600ms ease-in;
+
+    &.loading {
+        max-height: 200px;
+    }
+
+    &:not(.loading) {
+        .finagraph-strongbox-modal__actions, .simple-modal__content {
+            margin-top: 12px;
+            overflow-y: hidden;
+        }
+    }
+
+    .finagraph-strongbox-modal__actions {
+        padding: 24px;
+        padding-top: 0;
+    }
+
+    .finagraph-strongbox-link-modal__content-container {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        h1 {
+            font-size: 20px;
+        }
+
+        .finagraph-strongbox-linker__description {
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .finagraph-strongbox-linker__connect-graphic {
+            width: 302px;
+            height: 44px;
+            margin: 16px 0;
+        }
+
+        .finagraph-strongbox-linker__connect-graphic-description {
+            font-size: 11px;
+            text-align: center;
+            width: 388px;
+        }
+
+        .finagraph-strongbox-linker__auth-button {
+            height: 40px;
+            margin-bottom: 16px;
+            margin-top: 40px;
+            width: 210px;
+        }
+    }
+}
