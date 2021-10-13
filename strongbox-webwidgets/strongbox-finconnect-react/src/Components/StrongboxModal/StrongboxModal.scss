@@ -1,0 +1,149 @@
+$modalPadding: 24px;
+$modalZIndex: 11;
+
+$textGray: #747474;
+$headerGray: #404040;
+$inputBackground: #e8e8e8;
+$inputBorder: #707070;
+$inputTextColor: rgba(32,32,32,0.6);
+$normalButtonColor: #01bbc8;
+$normalButtonTextColor: white;
+$cancelButtonColor: #fcfcfc;
+$cancelButtonTextColor: #2e2e2e;
+
+@mixin shadow($x, $y, $blur: 2px, $alpha: .16) {
+    box-shadow: $x $y $blur 0 rgba(0,0,0, $alpha);
+}
+
+.ReactModal__Overlay {
+    opacity: 0;
+    transform: scale(1.2, 1.2);
+    transition: opacity 200ms ease, transform 200ms ease-out;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+    transform: scale(1, 1);
+}
+
+.finagraph-strongbox-modal-backdrop {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.finagraph-strongbox-modal {
+    @include shadow(0, 3px, 6px);
+    background: white;
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-weight: 400;
+    font-size: 14px;
+    position: absolute;
+    margin: auto;
+    max-width: 80%;
+    max-height: 90%;
+    min-width: 480px;
+    text-align: left;
+    z-index: $modalZIndex;
+    padding: 15px 15px 15px 15px;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    color: $textGray;
+
+    .finagraph-strongbox-modal__close {
+        position: absolute;
+        right: $modalPadding;
+        top: $modalPadding;
+        cursor: pointer;
+    }
+
+    .finagraph-strongbox-modal__close:hover {
+        color: darken($textGray, 10);
+    }
+
+    .finagraph-strongbox-modal__actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    input[type=text] {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 5px;
+        border-radius: 4px;
+        border: 1px solid $inputBorder;
+        background-color: $inputBackground;
+        color: $inputTextColor;
+    }
+
+    .modal-button {
+        width: auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .modal-button:active {
+        transform: translateY(2px) translateX(2px);
+    }
+
+    .cancel-modal-button {
+        margin-right: 20px;
+    }
+
+    .submit-modal-button {
+        background-color: $normalButtonColor;
+        color: $normalButtonTextColor;
+    }
+
+    .cancel-modal-button {
+        background-color: $cancelButtonColor;
+        color: $cancelButtonTextColor;
+    }
+
+    a {
+        opacity: 0.8;
+        color: $inputTextColor;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: $headerGray;
+    }
+
+    button {
+        background-color: $normalButtonColor;
+        color: $normalButtonTextColor;
+        padding: 8px 12px 8px 12px;
+        width: auto;
+        height: auto;
+        border-radius: 8px;
+        margin: 0 0 0 0;
+        font-size: 16px;
+    }
+}
+
+.simple-modal__header {
+    margin-bottom: 16px;
+    padding: $modalPadding;
+    padding-bottom: 0;
+
+    .simple-modal__title {
+        margin: 0;
+        line-height: 20px;
+        font-size: 20px;
+        margin-right: 16px;
+    }
+}
+
+.simple-modal__content {
+    height: 100%;
+    padding: 0 $modalPadding;
+}
+
+@media screen and (max-width: 1024px) {
+    .finagraph-strongbox-modal-backdrop > span {
+        padding: 4px;
+    }
+}
