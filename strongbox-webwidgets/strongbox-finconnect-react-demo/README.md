@@ -1,4 +1,4 @@
-# FinConnect Widget - Demo App
+# Strongbox FinConnect Widget - Demo App
 
   
 
