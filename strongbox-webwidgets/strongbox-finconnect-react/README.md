@@ -27,9 +27,6 @@ Install the Widget into your project:
 
 `npm install @finagraph/strongbox-finconnect-react`
 
-<aside>
-We are in the process of moving the Strongbox Widget to the public NPM registry. That will be completed shortly at which time it will no longer be necessary to modify .npmrc or prefix the package name with '@finagraph/'
-</aside>
 <br/>
 Import it into your application:
 
