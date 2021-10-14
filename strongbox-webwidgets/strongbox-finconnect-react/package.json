@@ -5,7 +5,7 @@
   "author": "Finagraph",
   "license": "MIT License",
   "repository": {
-    "url": "https://github.com/Finagraph/strongbox-sdks/tree/main/strongobx-webwidgets/strongbox-finconnect-react"
+    "url": "https://github.com/Finagraph/strongbox-sdks/tree/main/strongbox-webwidgets"
   },
   "main": "dist/index.js",
   "engines": {

@@ -26,4 +26,4 @@ Our NodeJS components are coming soon.
 
 ## Web Widgets
 
-Check out the [strongbox-webwidgets](https://github.com/Finagraph/strongbox-sdks/tree/main/strongbox-webwidgets) repository to learn how to drop one of our Web Widgets into your website.
+Check out the [strongbox-webwidgets](strongbox-webwidgets) repository to learn how to drop one of our Web Widgets into your website.
