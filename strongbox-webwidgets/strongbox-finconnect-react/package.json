@@ -49,6 +49,8 @@
   "keywords": [
     "react",
     "typescript",
-    "npm"
+    "npm",
+    "strongbox",
+    "finagraph"
   ]
 }

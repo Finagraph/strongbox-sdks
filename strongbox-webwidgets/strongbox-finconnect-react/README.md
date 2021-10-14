@@ -25,17 +25,8 @@ As with the basic use of the Widget, the easiest way to understand theming and c
 
 Install the Widget into your project:
 
-First you will need to modify .npmrc with the following line:
-
-`@finagraph:registry=https://booyami.pkgs.visualstudio.com/d686db0f-7565-40b7-b98e-8e7dd2124506/_packaging/FinagraphPublic%40Local/npm/registry/`
-
-Then execute the following:
-
 `npm install @finagraph/strongbox-finconnect-react`
 
-<aside>
-We are in the process of moving the Strongbox Widget to the public NPM registry. That will be completed shortly at which time it will no longer be necessary to modify .npmrc or prefix the package name with '@finagraph/'
-</aside>
 <br/>
 Import it into your application:
 
