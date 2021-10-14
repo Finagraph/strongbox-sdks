@@ -2,7 +2,7 @@
 
   
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and contains some simple modifications to help you understand how to use the **FinConnect Widget**.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and contains some simple modifications to help you understand how to use the **Strongbox FinConnect Widget**.
 
   
 
@@ -17,19 +17,19 @@ The sample contained in this project illustrates making calls to the Strongbox s
 # Overview
  
 
-This sample code demonstrates how to use the **FinConnect Widget** component that guides a user through the process of connecting Strongbox to their accounting system such that it can gather their financial information from the accounting system and provide analysis of that data to a financial institution partnered with Finagraph.
+This sample code demonstrates how to use the **Strongbox FinConnect Widget** component that guides a user through the process of connecting Strongbox to their accounting system such that it can gather their financial information from the accounting system and provide analysis of that data to a financial institution partnered with Finagraph.
 
-**IMPORTANT:** The code comes in 2 subdirectories. The first subdirectory (finconnect-react) contains the actual code for the Strongbox widget. The second (finconnect-react-demo) is the code that presents a sample application using the widget. By default the demo application is configured to use a version of the widget accessible through npm.  There is a '.npmrc' file checked into the demo directory that allows for loading this package from its current location.
+**IMPORTANT:** The code comes in 2 subdirectories. The first subdirectory (strongbox-finconnect-react) contains the actual code for the Strongbox widget. The second (strongbox-finconnect-react-demo) is the code that presents a sample application using the widget. By default the demo application is configured to use a version of the widget accessible through npm. 
 
-The model above facilitates deploying the widget to a publicly available site. You can also use the locally built version of the widget included in the finconnect-react subdirectory which is likely easier if you are trying to step through the widget and observe what it's doing locally.   To do that, load finconnect-react-demo/package.json and replace the following:
+The model above facilitates deploying the widget to a publicly available site. You can also use the locally built version of the widget included in the strongbox-finconnect-react subdirectory which is likely easier if you are trying to step through the widget and observe what it's doing locally.   To do that, load strongbox-finconnect-react-demo/package.json and replace the following:
 
-    "@finagraph/strongbox-react": "^0.1.90",
+    "@finagraph/strongbox-finconnect-react": "^0.1.24",
    
 with:
 
-    "@finagraph/finconnect-react": "file:../finconnect-react",
+    "@finagraph/strongbox-finconnect-react": "file:../strongbox-finconnect-react",
 
-After this you can run `npm run build` in each of the subdirectories starting with finconnect-react.   After that `npm start` in the finconnect-react-demo should launch the demo application running locally.
+After this you can run `npm run build` in each of the subdirectories starting with strongbox-finconnect-react.   After that `npm start` in the strongbox-finconnect-react-demo should launch the demo application running locally.
 
 Using the widget is straight-forward and divided in to two parts. The first step is to generate an access token. This token is generated for an organization that has partnered with Finagraph and has received a carefully guarded clientId and clientSecret that identifies the partner to Strongbox.
  
