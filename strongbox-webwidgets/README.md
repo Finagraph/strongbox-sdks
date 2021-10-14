@@ -10,5 +10,5 @@ This repo also contains a sample React application that demonstrates how to use 
 
 This widget is currently available for websites using [React](https://reactjs.org/). Checkout the links below to get started.
 
-- [Source](/strongbox-finconnect-react)
-- [Sample Application](/strongbox-finconnect-react-demo)
+- [Source](strongbox-finconnect-react)
+- [Sample Application](strongbox-finconnect-react-demo)
