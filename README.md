@@ -24,6 +24,6 @@ Our .NET SDK libraries are coming soon.
 
 Our NodeJS components are coming soon.
 
-## Web Widgets
+**Web Widgets**
 
-Check out the [strongbox-webwidgets](strongbox-webwidgets) repository to learn how to drop one of our Web Widgets into your website.
+Learn how to drop one of our [Web Widgets](strongbox-webwidgets) into your website.
