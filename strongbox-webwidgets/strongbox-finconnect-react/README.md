@@ -25,12 +25,6 @@ As with the basic use of the Widget, the easiest way to understand theming and c
 
 Install the Widget into your project:
 
-First you will need to modify .npmrc with the following line:
-
-`@finagraph:registry=https://booyami.pkgs.visualstudio.com/d686db0f-7565-40b7-b98e-8e7dd2124506/_packaging/FinagraphPublic%40Local/npm/registry/`
-
-Then execute the following:
-
 `npm install @finagraph/strongbox-finconnect-react`
 
 <aside>
