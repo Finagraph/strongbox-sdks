@@ -19,6 +19,7 @@ import {
     PrivacyControl,
     TransactionImportOptions,
     ReceivablesAndPayablesOptions,
+    BasisOfAccountingPreference,
 } from '../Models/Api/strongbox.models';
 
 import { AccountingPackage } from '../Models/AccountingPackages';
@@ -62,6 +63,7 @@ export type LenderConnectionOptions = {
     receivablesPeriod?: ReceivablesAndPayablesOptions;
     anonymizeCustomersAndVendors: boolean;
     provideUserCopy: boolean;
+    basisOfAccountingPreference: BasisOfAccountingPreference;
 };
 
 /**
@@ -335,7 +337,8 @@ export const StartFinancialsImport = async (
                 financialStatementsPeriod,
                 transactionsPeriod,
                 receivablesPeriod,
-                payablesPeriod
+                payablesPeriod,
+                basisOfAccountingPreference,
             } = connectionInfo.lenderManagedOptions;
 
             // At the strongbox level, numberOfPeriods includes year to date and month to date, so
@@ -385,6 +388,7 @@ export const StartFinancialsImport = async (
                 transactions: transactionOptions,
                 receivables: receivablesOptions,
                 payables: payablesOptions,
+                basisOfAccountingPreference: basisOfAccountingPreference,
             })
 
             parameters.accountingDataImportOptions = importOptions;
