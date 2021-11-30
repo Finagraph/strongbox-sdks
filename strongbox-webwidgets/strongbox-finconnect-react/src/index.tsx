@@ -72,7 +72,8 @@ import {
     FinancialStatementImportOptions,
     TransactionImportOptions,
     ReceivablesAndPayablesOptions,
-    InitializeOrganizationParameters
+    InitializeOrganizationParameters,
+    BasisOfAccountingPreference
 } from './Models/Api/strongbox.models';
 
 import { TextContent, TextLanguages } from './Text/TextContent';
@@ -83,6 +84,7 @@ export {
     BorrowerSteps,
     AccountingPackageToShow,
     SupportedAccountingPackages,
+    BasisOfAccountingPreference,
 };
 
 export type FinancialImportOptions = {
@@ -92,6 +94,8 @@ export type FinancialImportOptions = {
     payablesPeriod?: ReceivablesAndPayablesOptions;
     receivablesPeriod?: ReceivablesAndPayablesOptions;
     anonymizeCustomersAndVendors: boolean;
+    basisOfAccountingPreference: BasisOfAccountingPreference;
+    
 };
 
 export type SBLinkAccountingPackageChildProps = {
