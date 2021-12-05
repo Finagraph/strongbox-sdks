@@ -93,9 +93,7 @@ export type FinancialImportOptions = {
     transactionsPeriod?: TransactionImportOptions;
     payablesPeriod?: ReceivablesAndPayablesOptions;
     receivablesPeriod?: ReceivablesAndPayablesOptions;
-    anonymizeCustomersAndVendors: boolean;
-    basisOfAccountingPreference: BasisOfAccountingPreference;
-    
+    anonymizeCustomersAndVendors: boolean;  
 };
 
 export type SBLinkAccountingPackageChildProps = {

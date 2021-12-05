@@ -181,7 +181,6 @@ export interface IAccountClassification {
 
 /** Models options for importing accounting data. */
 export class AccountingDataImportParameters implements IAccountingDataImportParameters {
-    basisOfAccountingPreference?: BasisOfAccountingPreference;
     /** Used to specify privacy controls to be applied to the imported financial data. The default if not specified is no privacy controls enabled. */
     privacyControls?: PrivacyControl[] | undefined;
     transactions?: TransactionImportOptions;
@@ -200,7 +199,6 @@ export class AccountingDataImportParameters implements IAccountingDataImportPara
 
     init(_data?: any) {
         if (_data) {
-            this.basisOfAccountingPreference = _data["basisOfAccountingPreference"];
             if (Array.isArray(_data["privacyControls"])) {
                 this.privacyControls = [] as any;
                 for (let item of _data["privacyControls"])
@@ -222,7 +220,6 @@ export class AccountingDataImportParameters implements IAccountingDataImportPara
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["basisOfAccountingPreference"] = this.basisOfAccountingPreference;
         if (Array.isArray(this.privacyControls)) {
             data["privacyControls"] = [];
             for (let item of this.privacyControls)
@@ -245,7 +242,6 @@ export class AccountingDataImportParameters implements IAccountingDataImportPara
 
 /** Models options for importing accounting data. */
 export interface IAccountingDataImportParameters {
-    basisOfAccountingPreference?: BasisOfAccountingPreference;
     /** Used to specify privacy controls to be applied to the imported financial data. The default if not specified is no privacy controls enabled. */
     privacyControls?: PrivacyControl[] | undefined;
     transactions?: TransactionImportOptions;
@@ -256,7 +252,6 @@ export interface IAccountingDataImportParameters {
 
 /** Models the organization for which accounting and other financial data was prepared. */
 export class AccountingEntity implements IAccountingEntity {
-    accountingMethod!: AccountingMethod;
     baseCurrency?: Currency;
     fiscalYearEnd?: YearEnd;
     homeCountry?: Country;
@@ -296,7 +291,6 @@ export class AccountingEntity implements IAccountingEntity {
 
     init(_data?: any) {
         if (_data) {
-            this.accountingMethod = _data["accountingMethod"];
             this.baseCurrency = _data["baseCurrency"] ? Currency.fromJS(_data["baseCurrency"]) : <any>undefined;
             this.fiscalYearEnd = _data["fiscalYearEnd"] ? YearEnd.fromJS(_data["fiscalYearEnd"]) : <any>undefined;
             this.homeCountry = _data["homeCountry"] ? Country.fromJS(_data["homeCountry"]) : <any>undefined;
@@ -348,7 +342,6 @@ export class AccountingEntity implements IAccountingEntity {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["accountingMethod"] = this.accountingMethod;
         data["baseCurrency"] = this.baseCurrency ? this.baseCurrency.toJSON() : <any>undefined;
         data["fiscalYearEnd"] = this.fiscalYearEnd ? this.fiscalYearEnd.toJSON() : <any>undefined;
         data["homeCountry"] = this.homeCountry ? this.homeCountry.toJSON() : <any>undefined;
@@ -401,7 +394,6 @@ export class AccountingEntity implements IAccountingEntity {
 
 /** Models the organization for which accounting and other financial data was prepared. */
 export interface IAccountingEntity {
-    accountingMethod: AccountingMethod;
     baseCurrency?: Currency;
     fiscalYearEnd?: YearEnd;
     homeCountry?: Country;
@@ -424,7 +416,6 @@ export interface IAccountingEntity {
 
 /** Models options for importing accounting data. */
 export class AccountingImportOptions implements IAccountingImportOptions {
-    basisOfAccountingPreference!: BasisOfAccountingPreference;
     /** Used to specify privacy controls to be applied to the imported financial data. */
     privacyControls!: PrivacyControl[];
     transactions!: TransactionImportOptions;
@@ -450,7 +441,6 @@ export class AccountingImportOptions implements IAccountingImportOptions {
 
     init(_data?: any) {
         if (_data) {
-            this.basisOfAccountingPreference = _data["basisOfAccountingPreference"];
             if (Array.isArray(_data["privacyControls"])) {
                 this.privacyControls = [] as any;
                 for (let item of _data["privacyControls"])
@@ -472,7 +462,6 @@ export class AccountingImportOptions implements IAccountingImportOptions {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["basisOfAccountingPreference"] = this.basisOfAccountingPreference;
         if (Array.isArray(this.privacyControls)) {
             data["privacyControls"] = [];
             for (let item of this.privacyControls)
@@ -495,7 +484,6 @@ export class AccountingImportOptions implements IAccountingImportOptions {
 
 /** Models options for importing accounting data. */
 export interface IAccountingImportOptions {
-    basisOfAccountingPreference: BasisOfAccountingPreference;
     /** Used to specify privacy controls to be applied to the imported financial data. */
     privacyControls: PrivacyControl[];
     transactions: TransactionImportOptions;
@@ -503,9 +491,6 @@ export interface IAccountingImportOptions {
     receivables: ReceivablesAndPayablesOptions;
     payables: ReceivablesAndPayablesOptions;
 }
-
-/** Defines possible values for accounting methods (aka the basis of accounting). |Enum Value|Description| |--|--| |Unknown|The accounting method is not known.| |Accrual|Income and expenses are recorded when earned, which does not necessarily align with<br/>            when cash is actually received or paid. Creditors and debtors are typically tracked via AR and AP accounts.| |Cash|Income and expenses are recorded when cash is actually received.| |ModifiedCash|Income is recorded when it is earned, but expenses are recorded only when money is paid out.| */
-export type AccountingMethod = "Unknown" | "Accrual" | "Cash" | "ModifiedCash";
 
 /** The kind of an account can be either real or nominal. |Enum Value|Description| |--|--| |Real|Real or permanent account balances carry over to the next fiscal year. This includes Asset, Liability, and Equity accounts.| |Nominal|Nominal accounts are reset at the end of each fiscal year. This includes Revenue and Expense accounts.| */
 export type AccountKind = "Real" | "Nominal";
@@ -948,6 +933,9 @@ export interface IBalanceSheetVerticalAnalysis {
 /** Defines possible options for selecting baseline period(s) to use for a Horizontal Analysis. |Enum Value|Description| |--|--| |YoY|Each full fiscal year is compared to the prior fiscal year.| |YoYAndTTM|Each full fiscal year is compared to the prior fiscal year, and the TTM period is compared to the last closed fiscal year.| |YoYByQuarter|Each fiscal quarter is compared to the same quarter of the prior fiscal year.| |YoYByMonth|Each month is compared to the same month of the prior fiscal year.| |InterimYoY|Each interim year is compared to the previous, where the interim year is defined by the number of months completed in the current fiscal year.| |CalendarYoY|Each calendar year is compared to the prior calendar year.| |CalendarYoYByQuarter|Each quarter is compared to the same quarter of the prior calendar year.| |CalendarYoYByMonth|Each month is compared to the same month of the prior calendar year.| |Rolling12MonthsYoY|Each rolling 12 month period is compared to the previous rolling 12 month period.| |QoQ|Each fiscal quarter is compared to the previous fiscal quarter.| |CalendarQoQ|Each quarter of the calendar year is compared to the previous quarter.| |MoM|Each month is compared to the previous month.| |FirstMonth|Each month is compared to the first available month.| |FirstQuarter|Each fiscal quarter is compared to the first available fiscal quarter.| |FirstCalendarQuarter|Each quarter of the calendar year is compared to the first available quarter.| |FirstYear|Each fiscal year is compared to the first available fiscal year.| |FirstCalendarYear|Each calendar year is compared to the first available calendar year.| |FirstInterimYear|Each interim year is compared to the first available, where the interim year is defined by the number of months completed in the current fiscal year.| |FirstRolling12Months|Each rolling 12 month period is compared to the first available rolling 12 month period.| */
 export type BaselinePeriodType = "YoY" | "YoYAndTTM" | "YoYByQuarter" | "YoYByMonth" | "InterimYoY" | "CalendarYoY" | "CalendarYoYByQuarter" | "CalendarYoYByMonth" | "Rolling12MonthsYoY" | "QoQ" | "CalendarQoQ" | "MoM" | "FirstMonth" | "FirstQuarter" | "FirstCalendarQuarter" | "FirstYear" | "FirstCalendarYear" | "FirstInterimYear" | "FirstRolling12Months";
 
+/** Specifies the Basis Of Accounting used to prepare financial data. |Enum Value|Description| |--|--| |Accrual|Import financial data on an accrual basis if possible.| |Cash|Import financial data on a cash basis if possible.| */
+export type BasisOfAccounting = "Accrual" | "Cash";
+
 /** Specifies preferences for the Basis Of Accounting to use when importing financial data from an accounting system. |Enum Value|Description| |--|--| |Accrual|Import financial data on an accrual basis if possible.| |Cash|Import financial data on a cash basis if possible.| |CashAndAccrual|Import financial data on both a cash and accrual basis if possible.| */
 export type BasisOfAccountingPreference = "Accrual" | "Cash" | "CashAndAccrual";
 
@@ -1132,7 +1120,7 @@ export interface IColumnHeader {
 
 /** Models a Comparative Balance Sheet (aka The Statement of Financial Position). */
 export class ComparativeBalanceSheet implements IComparativeBalanceSheet {
-    accountingMethod!: AccountingMethod;
+    accountingMethod!: BasisOfAccounting;
     /** The column headers contain information about the reporting periods represented in the comparative financial statement. */
     columnHeaders!: ColumnHeader[];
     currency?: Currency;
@@ -1232,7 +1220,7 @@ export class ComparativeBalanceSheet implements IComparativeBalanceSheet {
 
 /** Models a Comparative Balance Sheet (aka The Statement of Financial Position). */
 export interface IComparativeBalanceSheet {
-    accountingMethod: AccountingMethod;
+    accountingMethod: BasisOfAccounting;
     /** The column headers contain information about the reporting periods represented in the comparative financial statement. */
     columnHeaders: ColumnHeader[];
     currency?: Currency;
@@ -1252,7 +1240,7 @@ export interface IComparativeBalanceSheet {
 
 /** Models a Comparative Income Statement (aka The Profit and Loss Statement). */
 export class ComparativeIncomeStatement implements IComparativeIncomeStatement {
-    accountingMethod!: AccountingMethod;
+    accountingMethod!: BasisOfAccounting;
     /** The column headers contain information about the reporting periods represented in the comparative financial statement. */
     columnHeaders!: ColumnHeader[];
     currency?: Currency;
@@ -1352,7 +1340,7 @@ export class ComparativeIncomeStatement implements IComparativeIncomeStatement {
 
 /** Models a Comparative Income Statement (aka The Profit and Loss Statement). */
 export interface IComparativeIncomeStatement {
-    accountingMethod: AccountingMethod;
+    accountingMethod: BasisOfAccounting;
     /** The column headers contain information about the reporting periods represented in the comparative financial statement. */
     columnHeaders: ColumnHeader[];
     currency?: Currency;
@@ -2899,6 +2887,7 @@ export interface IFinancialStatementHorizontalAnalysis {
 
 /** Used to configure the financial statements that are collected from the accounting system. */
 export class FinancialStatementImportOptions implements IFinancialStatementImportOptions {
+    basisOfAccountingPreference?: BasisOfAccountingPreference;
     reportingPeriod?: ImportReportingPeriod;
     /** A natural number greater than or equal to zero used to specify the total number of months, quarters, or years for which financial data is desired. The month-to-date, quarter-to-date, or year-to-date period is included in this count. For example, setting 'reportingPeriod' to 'FiscalYears' and 'numberOfReportingPeriods' to 3 should be interpreted as '2 full fiscal years and fiscal YTD'. Setting 'numberOfPeriods' to zero disables data collection. */
     numberOfPeriods!: number;
@@ -2914,6 +2903,7 @@ export class FinancialStatementImportOptions implements IFinancialStatementImpor
 
     init(_data?: any) {
         if (_data) {
+            this.basisOfAccountingPreference = _data["basisOfAccountingPreference"];
             this.reportingPeriod = _data["reportingPeriod"];
             this.numberOfPeriods = _data["numberOfPeriods"];
         }
@@ -2928,6 +2918,7 @@ export class FinancialStatementImportOptions implements IFinancialStatementImpor
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["basisOfAccountingPreference"] = this.basisOfAccountingPreference;
         data["reportingPeriod"] = this.reportingPeriod;
         data["numberOfPeriods"] = this.numberOfPeriods;
         return data; 
@@ -2943,6 +2934,7 @@ export class FinancialStatementImportOptions implements IFinancialStatementImpor
 
 /** Used to configure the financial statements that are collected from the accounting system. */
 export interface IFinancialStatementImportOptions {
+    basisOfAccountingPreference?: BasisOfAccountingPreference;
     reportingPeriod?: ImportReportingPeriod;
     /** A natural number greater than or equal to zero used to specify the total number of months, quarters, or years for which financial data is desired. The month-to-date, quarter-to-date, or year-to-date period is included in this count. For example, setting 'reportingPeriod' to 'FiscalYears' and 'numberOfReportingPeriods' to 3 should be interpreted as '2 full fiscal years and fiscal YTD'. Setting 'numberOfPeriods' to zero disables data collection. */
     numberOfPeriods: number;
@@ -2956,6 +2948,8 @@ export class FinancialWorkbook implements IFinancialWorkbook {
     filename!: string;
     /** The time at which the Financial Workbook was created. */
     creationTime!: string;
+    /** A set of tags associated with the workbook. Examples are 'Customer Copy', 'Accrual Basis', and 'Cash Basis'. */
+    tags?: string[] | undefined;
 
     constructor(data?: IFinancialWorkbook) {
         if (data) {
@@ -2971,6 +2965,11 @@ export class FinancialWorkbook implements IFinancialWorkbook {
             this.variantId = _data["variantId"];
             this.filename = _data["filename"];
             this.creationTime = _data["creationTime"];
+            if (Array.isArray(_data["tags"])) {
+                this.tags = [] as any;
+                for (let item of _data["tags"])
+                    this.tags!.push(item);
+            }
         }
     }
 
@@ -2986,6 +2985,11 @@ export class FinancialWorkbook implements IFinancialWorkbook {
         data["variantId"] = this.variantId;
         data["filename"] = this.filename;
         data["creationTime"] = this.creationTime;
+        if (Array.isArray(this.tags)) {
+            data["tags"] = [];
+            for (let item of this.tags)
+                data["tags"].push(item);
+        }
         return data; 
     }
 
@@ -3005,6 +3009,8 @@ export interface IFinancialWorkbook {
     filename: string;
     /** The time at which the Financial Workbook was created. */
     creationTime: string;
+    /** A set of tags associated with the workbook. Examples are 'Customer Copy', 'Accrual Basis', and 'Cash Basis'. */
+    tags?: string[] | undefined;
 }
 
 /** Models a list of Financial Workbooks. */
@@ -5166,6 +5172,7 @@ export interface ITransactionEntry {
 
 /** Used to configure the transactional data that is collected from the accounting system. */
 export class TransactionImportOptions implements ITransactionImportOptions {
+    basisOfAccountingPreference?: BasisOfAccountingPreference;
     reportingPeriod?: ImportReportingPeriod;
     /** A natural number greater than or equal to zero used to specify the total number of months, quarters, or years for which financial data is desired. The month-to-date, quarter-to-date, or year-to-date period is included in this count. For example, setting 'reportingPeriod' to 'FiscalYears' and 'numberOfReportingPeriods' to 3 should be interpreted as '2 full fiscal years and fiscal YTD'. Setting 'numberOfPeriods' to zero disables data collection. */
     numberOfPeriods!: number;
@@ -5181,6 +5188,7 @@ export class TransactionImportOptions implements ITransactionImportOptions {
 
     init(_data?: any) {
         if (_data) {
+            this.basisOfAccountingPreference = _data["basisOfAccountingPreference"];
             this.reportingPeriod = _data["reportingPeriod"];
             this.numberOfPeriods = _data["numberOfPeriods"];
         }
@@ -5195,6 +5203,7 @@ export class TransactionImportOptions implements ITransactionImportOptions {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["basisOfAccountingPreference"] = this.basisOfAccountingPreference;
         data["reportingPeriod"] = this.reportingPeriod;
         data["numberOfPeriods"] = this.numberOfPeriods;
         return data; 
@@ -5210,6 +5219,7 @@ export class TransactionImportOptions implements ITransactionImportOptions {
 
 /** Used to configure the transactional data that is collected from the accounting system. */
 export interface ITransactionImportOptions {
+    basisOfAccountingPreference?: BasisOfAccountingPreference;
     reportingPeriod?: ImportReportingPeriod;
     /** A natural number greater than or equal to zero used to specify the total number of months, quarters, or years for which financial data is desired. The month-to-date, quarter-to-date, or year-to-date period is included in this count. For example, setting 'reportingPeriod' to 'FiscalYears' and 'numberOfReportingPeriods' to 3 should be interpreted as '2 full fiscal years and fiscal YTD'. Setting 'numberOfPeriods' to zero disables data collection. */
     numberOfPeriods: number;

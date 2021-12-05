@@ -19,7 +19,6 @@ import {
     PrivacyControl,
     TransactionImportOptions,
     ReceivablesAndPayablesOptions,
-    BasisOfAccountingPreference,
 } from '../Models/Api/strongbox.models';
 
 import { AccountingPackage } from '../Models/AccountingPackages';
@@ -63,7 +62,6 @@ export type LenderConnectionOptions = {
     receivablesPeriod?: ReceivablesAndPayablesOptions;
     anonymizeCustomersAndVendors: boolean;
     provideUserCopy: boolean;
-    basisOfAccountingPreference: BasisOfAccountingPreference;
 };
 
 /**
@@ -338,7 +336,6 @@ export const StartFinancialsImport = async (
                 transactionsPeriod,
                 receivablesPeriod,
                 payablesPeriod,
-                basisOfAccountingPreference,
             } = connectionInfo.lenderManagedOptions;
 
             // At the strongbox level, numberOfPeriods includes year to date and month to date, so
@@ -349,18 +346,22 @@ export const StartFinancialsImport = async (
                 financialStatementsPeriod ? {
                     reportingPeriod: financialStatementsPeriod.reportingPeriod,
                     numberOfPeriods: financialStatementsPeriod.numberOfPeriods,
+                    basisOfAccountingPreference: financialStatementsPeriod.basisOfAccountingPreference,
                 } : {
                     reportingPeriod: undefined,
                     numberOfPeriods: 0,
+                    basisOfAccountingPreference: undefined,
                 }
             );
             const transactionOptions = new TransactionImportOptions(
                 transactionsPeriod ? {
                     reportingPeriod: transactionsPeriod.reportingPeriod,
                     numberOfPeriods: transactionsPeriod.numberOfPeriods,
+                    basisOfAccountingPreference: transactionsPeriod.basisOfAccountingPreference,
                 } : {
                     reportingPeriod: undefined,
                     numberOfPeriods: 0,
+                    basisOfAccountingPreference: undefined,
                 }
             );
             const receivablesOptions = new ReceivablesAndPayablesOptions(
@@ -388,7 +389,6 @@ export const StartFinancialsImport = async (
                 transactions: transactionOptions,
                 receivables: receivablesOptions,
                 payables: payablesOptions,
-                basisOfAccountingPreference: basisOfAccountingPreference,
             })
 
             parameters.accountingDataImportOptions = importOptions;
