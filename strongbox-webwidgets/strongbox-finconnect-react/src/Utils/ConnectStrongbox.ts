@@ -19,6 +19,9 @@ import {
     PrivacyControl,
     TransactionImportOptions,
     ReceivablesAndPayablesOptions,
+    IFinancialStatementImportOptions,
+    ITransactionImportOptions,
+    IReceivablesAndPayablesOptions,
 } from '../Models/Api/strongbox.models';
 
 import { AccountingPackage } from '../Models/AccountingPackages';
@@ -56,10 +59,10 @@ export type ImportDayMonthYear = {
 
 export type LenderConnectionOptions = {
     mostRecentDate?: ImportDayMonthYear;
-    financialStatementsPeriod?: FinancialStatementImportOptions;
-    transactionsPeriod?: TransactionImportOptions;
-    payablesPeriod?: ReceivablesAndPayablesOptions;
-    receivablesPeriod?: ReceivablesAndPayablesOptions;
+    financialStatementsPeriod?: IFinancialStatementImportOptions;
+    transactionsPeriod?: ITransactionImportOptions;
+    payablesPeriod?: IReceivablesAndPayablesOptions;
+    receivablesPeriod?: IReceivablesAndPayablesOptions;
     anonymizeCustomersAndVendors: boolean;
     provideUserCopy: boolean;
 };
