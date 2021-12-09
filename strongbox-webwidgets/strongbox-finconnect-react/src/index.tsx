@@ -69,10 +69,12 @@ import { WebPortalClient } from './Models/Api/strongbox.client';
 
 import { LinkerModal } from './Components/StrongboxLinker/LinkerModal';
 import {
-    FinancialStatementImportOptions,
-    TransactionImportOptions,
     ReceivablesAndPayablesOptions,
-    InitializeOrganizationParameters
+    InitializeOrganizationParameters,
+    BasisOfAccountingPreference,
+    IFinancialStatementImportOptions,
+    ITransactionImportOptions,
+    IReceivablesAndPayablesOptions
 } from './Models/Api/strongbox.models';
 
 import { TextContent, TextLanguages } from './Text/TextContent';
@@ -83,15 +85,16 @@ export {
     BorrowerSteps,
     AccountingPackageToShow,
     SupportedAccountingPackages,
+    BasisOfAccountingPreference,
 };
 
 export type FinancialImportOptions = {
     mostRecentDate?: ImportDayMonthYear;
-    financialStatementsPeriod?: FinancialStatementImportOptions;
-    transactionsPeriod?: TransactionImportOptions;
-    payablesPeriod?: ReceivablesAndPayablesOptions;
+    financialStatementsPeriod?: IFinancialStatementImportOptions;
+    transactionsPeriod?: ITransactionImportOptions;
+    payablesPeriod?: IReceivablesAndPayablesOptions;
     receivablesPeriod?: ReceivablesAndPayablesOptions;
-    anonymizeCustomersAndVendors: boolean;
+    anonymizeCustomersAndVendors: boolean;  
 };
 
 export type SBLinkAccountingPackageChildProps = {
