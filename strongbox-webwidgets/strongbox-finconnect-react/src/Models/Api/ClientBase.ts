@@ -1,5 +1,5 @@
 ﻿/** Defines what a delegated access token is to be used for. */
-export type DelegatedAccessTokenPurpose = "ConnectAccountingSystem";
+export type DelegatedAccessTokenPurpose = "ConnectAccountingSystem" | "ConnectionManagement";
 
 /** A Delegated Access Token response. */
 export interface IDelegatedAccessToken {
