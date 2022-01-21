@@ -454,6 +454,10 @@ export const FinancialsImport = async (
 }
 
 export const FindConnection = async (accessToken: IDelegatedAccessToken, strongboxUri: string, orgId: string, accountingPackage: AccountingPackage): Promise<ConnectionDescriptor | undefined> => {
+
+    // the purpose of the delegated access token determines whether we have permission to list connections or not. if we don't have permission, don't attempt the request.
+    if(!accessToken.purpose.some(p => p == 'ConnectionManagement')) return undefined;
+
     const connections = new ConnectionsClient(accessToken, strongboxUri);
 
     try {
