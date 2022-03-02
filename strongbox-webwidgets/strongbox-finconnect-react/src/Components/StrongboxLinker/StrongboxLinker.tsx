@@ -3,7 +3,7 @@ import * as React from 'react';
 import { AccountingPackage } from '../../Models/AccountingPackages';
 import { ConnectButton } from '../ConnectButton';
 
-import { LoadConnectWindow, StrongboxConnectionDescriptor } from '../../Utils/ConnectStrongbox';
+import { LoadConnectWindow, StrongboxConnectionRequest } from '../../Utils/ConnectStrongbox';
 
 import { Theme } from '../../Models/Theme/Theme';
 
@@ -14,11 +14,11 @@ type ConnectButtonProps = {
 };
 
 export type StrongboxLinkerChildProps = {
-    connectionInfo?: StrongboxConnectionDescriptor,
+    cxnRequest?: StrongboxConnectionRequest,
     authorized: boolean | undefined;
     disconnect: () => Promise<void>;
     renderAuthButton: (props?: Partial<ConnectButtonProps>) => JSX.Element;
-    startJob: (existingConnectionId: string) => void;
+    connectionInitiated: (existingConnectionId: string) => void;
     theme?: Theme;
     disabled?: boolean;
     errorMsg?: string;
@@ -26,7 +26,7 @@ export type StrongboxLinkerChildProps = {
 };
 
 export type Props = {
-    connectionInfo?: StrongboxConnectionDescriptor,
+    cxnRequest?: StrongboxConnectionRequest,
     strongboxCxnRequestDescriptor?: ConnectionRequestDescriptor,
     onOpen?: (authWindow: Window) => void
     existingConnectionId?: string;
@@ -66,11 +66,11 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
         const authorized = !!this.props.checkAuthorizationStatus && !!this.props.isAuthorized;
 
         const childrenProps: StrongboxLinkerChildProps = {
-            connectionInfo: this.props.connectionInfo,
+            cxnRequest: this.props.cxnRequest,
             authorized,
             disconnect: this.DisconnectConnection,
             renderAuthButton: this.RenderAuthButton,
-            startJob: this.CreateJob,
+            connectionInitiated: this.CreateJob,
             theme: this.props.theme,
             disabled: this.props.disabled,
             isWorking: this.props.isWorking,
@@ -87,8 +87,8 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
     private AuthorizeConnection = (): void => {
         let windowHandle: Window | undefined = undefined;
 
-        if (this.props.connectionInfo && !this.props.existingConnectionId && this.props.strongboxCxnRequestDescriptor) {
-            windowHandle = LoadConnectWindow(this.props.connectionInfo, this.props.strongboxCxnRequestDescriptor);
+        if (this.props.cxnRequest && !this.props.existingConnectionId && this.props.strongboxCxnRequestDescriptor) {
+            windowHandle = LoadConnectWindow(this.props.strongboxCxnRequestDescriptor);
             if (!windowHandle) {
                 return;
             }
@@ -102,7 +102,7 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
     }
 
     private CreateJob = (connectionId: string): void => {
-        if (this.props.connectionInfo && !this.props.existingConnectionId && this.props.strongboxCxnRequestDescriptor) {
+        if (this.props.cxnRequest && !this.props.existingConnectionId && this.props.strongboxCxnRequestDescriptor) {
             return;
         }
 

@@ -8,10 +8,11 @@ import { Theme } from '../../Models/Theme/Theme';
 
 import {
     DisconnectConnection,
-    FinancialsImport,
+    ConnectAccountingSystem,
     FindConnection,
     GetFinancialsConnectionDescriptor,
-    StrongboxConnectionDescriptor
+    StrongboxConnectionDescriptor,
+    StrongboxConnectionRequest
 } from '../../Utils/ConnectStrongbox';
 
 import { ConnectionRequestDescriptor } from '../../Models/Api/strongbox.models';
@@ -36,12 +37,12 @@ export enum LinkerModalErrorState {
  */
 
 export interface ISBLinkerModalProps {
-    connectionInfo: StrongboxConnectionDescriptor,
+    cxnRequest: StrongboxConnectionRequest,
     checkAuthorizationStatus?: boolean;
     onError?: (errorState: LinkerModalErrorState) => void,
     onAuthAborted?: () => void,
     onCompleted?: (success: boolean) => void,
-    onJobCreated?: (financialRecordId: string) => void,
+    onConnected?: (cxnRequest: StrongboxConnectionRequest, apiRequestParameters?: ConnectionRequestDescriptor) => void,
     onDisconnection?: (success: boolean) => void,
     className?: string;
     disabled?: boolean;
@@ -59,10 +60,10 @@ export interface ISBLinkerModalProps {
 
 type State = {
     connectionRequestInfo: ConnectionRequestDescriptor | undefined;
-    connectionInfoWithId: StrongboxConnectionDescriptor;    // initialized with the value of props.  Will contain the existing connection id
+    cxnRequestWithId: StrongboxConnectionRequest;    // initialized with the value of props.  Will contain the existing connection id
     errorText: string | undefined;
     gettingConnectionDescriptor: boolean;
-    importingFinancials: boolean;
+    connectingAccountingSystem: boolean;
     isDisconnecting: boolean;
     queryingConnect: boolean;
 };
@@ -81,10 +82,10 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
 
         this.state = {
             connectionRequestInfo: undefined,
-            connectionInfoWithId: props.connectionInfo,
+            cxnRequestWithId: props.cxnRequest,
             errorText: undefined,
             gettingConnectionDescriptor: false,
-            importingFinancials: false,
+            connectingAccountingSystem: false,
             isDisconnecting: false,
             queryingConnect: false,
         };
@@ -96,11 +97,16 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
         this.IsDisabledState = this.IsDisabledState.bind(this);
         this.OnImportError = this.OnImportError.bind(this);
         this.OnModalAborted = this.OnModalAborted.bind(this);
-        this.OnJobCreated = this.OnJobCreated.bind(this);
+        this.onAccountingSystemConnected = this.onAccountingSystemConnected.bind(this);
     }
 
     private IsDisabledState(): boolean {
-        return this.state.gettingConnectionDescriptor || this.state.importingFinancials || this.state.isDisconnecting || this.state.queryingConnect;
+        return (
+            this.state.gettingConnectionDescriptor ||
+            this.state.connectingAccountingSystem ||
+            this.state.isDisconnecting ||
+            this.state.queryingConnect
+        );
     }
 
     private _modal: IOpenableModal;
@@ -125,7 +131,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
         // We have not retrieved an existing connection id or aren't using the existing one.  That means we need to grab
         // a new connection descriptor for this accounting package 
         GetFinancialsConnectionDescriptor(
-            this.state.connectionInfoWithId,
+            this.state.cxnRequestWithId,
             (msg: string, detailedMsg: string): void => {
                 this.props.onError && this.props.onError(LinkerModalErrorState.FailureCreatingConnectionDescriptor);
             }
@@ -145,14 +151,14 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
             });
 
         this.setState({
-            connectionInfoWithId: {
-                ...this.props.connectionInfo,
+            cxnRequestWithId: {
+                ...this.props.cxnRequest,
                 existingConnectionId: undefined,
             },
             queryingConnect: false,
             gettingConnectionDescriptor: true,
             connectionRequestInfo: undefined,
-            importingFinancials: false,
+            connectingAccountingSystem: false,
             isDisconnecting: false,
         });
     }
@@ -162,17 +168,17 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
             this.GetConnection();
         } else {
             FindConnection(
-                this.props.connectionInfo.delegatedAccessToken,
-                this.props.connectionInfo.strongboxUri,
-                this.props.connectionInfo.orgId,
-                this.props.connectionInfo.accountingPackage)
+                this.props.cxnRequest.delegatedAccessToken,
+                this.props.cxnRequest.strongboxUri,
+                this.props.cxnRequest.orgId,
+                this.props.cxnRequest.accountingPackage)
                 .then(response => {
                     if (!response) {
                         this.GetConnection();
                     } else {
                         this.setState({
-                            connectionInfoWithId: {
-                                ...this.props.connectionInfo,
+                            cxnRequestWithId: {
+                                ...this.props.cxnRequest,
                                 existingConnectionId: response.id,
                             },
                             queryingConnect: false,
@@ -188,7 +194,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
 
             this.setState({
                 connectionRequestInfo: undefined,
-                importingFinancials: false,
+                connectingAccountingSystem: false,
                 isDisconnecting: false,
                 queryingConnect: true,
             });
@@ -212,40 +218,40 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
         this.InitState();
     }
 
-    private OnJobCreated(financialRecordId: string): void {
-        this.props.onJobCreated && this.props.onJobCreated(financialRecordId);
+    private onAccountingSystemConnected(cxnRequest: StrongboxConnectionRequest, apiRequestParameters?: ConnectionRequestDescriptor): void {
+        this.props.onConnected && this.props.onConnected(cxnRequest, apiRequestParameters);
         this.setState({
-            importingFinancials: false,
-        })
+            connectingAccountingSystem: false,
+        });
     }
 
     private ExecuteConnect(accountingPackage: AccountingPackage, connectionRequestId: string, connectionWindowHandle: Window | undefined) {
         // If there's no delegated access token OR
         // there is no existing connection id and connectionRequestInfo is not defined then we have an error.
 
-        if ((!this.state.connectionInfoWithId.delegatedAccessToken) || (!(this.state.connectionRequestInfo || this.state.connectionInfoWithId.existingConnectionId))) {
+        if ((!this.state.cxnRequestWithId.delegatedAccessToken) || (!(this.state.connectionRequestInfo || this.state.cxnRequestWithId.existingConnectionId))) {
             return;
         }
 
-        FinancialsImport(
-            this.state.connectionInfoWithId,
+        ConnectAccountingSystem(
+            this.state.cxnRequestWithId,
             this.state.connectionRequestInfo,
             connectionWindowHandle,
             this.OnImportError,
-            this.props.onJobCreated,
+            this.onAccountingSystemConnected,
             this.OnModalAborted,
             () => false,
         );
 
         this.setState({
-            importingFinancials: true,
-        })
+            connectingAccountingSystem: true,
+        });
     }
 
     private ExecuteDisconnect(): void {
-        if (!!(this.state.connectionInfoWithId && this.state.connectionInfoWithId.existingConnectionId) &&
-            !!(this.state.connectionInfoWithId && this.state.connectionInfoWithId.delegatedAccessToken)) {
-            DisconnectConnection(this.state.connectionInfoWithId)
+        if (!!(this.state.cxnRequestWithId && this.state.cxnRequestWithId.existingConnectionId) &&
+            !!(this.state.cxnRequestWithId && this.state.cxnRequestWithId.delegatedAccessToken)) {
+            DisconnectConnection(this.state.cxnRequestWithId)
                 .then(disconnected => {
                     this.props.onDisconnection && this.props.onDisconnection(disconnected);
                     this.InitState();
@@ -264,7 +270,13 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
     }
 
     private RenderModal = (): JSX.Element | false => {
-        const { accountingPackage, delegatedAccessToken, orgId, strongboxUri, submissionId } = this.state.connectionInfoWithId;
+        const {
+            accountingPackage,
+            delegatedAccessToken,
+            orgId,
+            strongboxUri,
+            submissionId
+        } = this.state.cxnRequestWithId;
 
         let content: JSX.Element | false = false;
         if (
@@ -279,7 +291,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
                     accountingPackage={accountingPackage}
                     entityId={orgId}
                     strongboxCxnRequestDescriptor={this.state.connectionRequestInfo}
-                    connectionRequestInfo={this.state.connectionInfoWithId}
+                    cxnRequest={this.state.cxnRequestWithId}
                     strongboxUrl={strongboxUri}
                     submissionId={submissionId}
                     delegatedAccessToken={delegatedAccessToken}
@@ -287,7 +299,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
                     executeConnect={this.ExecuteConnect}
                     executeDisconnect={this.ExecuteDisconnect}
                     onRequestClose={this.props.onCompleted}
-                    isAuthorized={!!(this.state.connectionInfoWithId && this.state.connectionInfoWithId.existingConnectionId)}
+                    isAuthorized={!!(this.state.cxnRequestWithId && this.state.cxnRequestWithId.existingConnectionId)}
                     checkAuthorizationStatus={this.props.checkAuthorizationStatus}
                     disabled={this.props.disabled || this.IsDisabledState()}
                     errorMsg={this.state.errorText}

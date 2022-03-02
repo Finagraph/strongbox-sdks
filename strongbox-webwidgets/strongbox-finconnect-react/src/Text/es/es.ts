@@ -17,10 +17,13 @@ export const translations: BaseTextContent = {
     GatheringRequiredInformation: 'Reuniendo información requerida',
     DeliveringToYourAccountMgr: 'Entregando a su gerente de cuenta',
     YourDataIsSubmitted: 'Sus datos financieros han sido presentados!',
+    ImportingFinancials: 'Iniciando recopilación de datos financieros...',
     Done: 'Hecho',
     ConnectToAccountingPkg: 'Conectar a',
     DisconnectFromAccountingPkg: 'Desconectar',
     UnknownAccountingPkg: 'Paquete de contabilidad desconocido',
+    ConnectAccountingSystemDetailedError: 'No se pudo crear su solicitud para ${accountingPackage}, estado de respuesta: ${responseStatus}',
+    ConnectAccountingSystemSummaryError: 'Se produjo un error comunicándose con el servidor, por favor intentar otra vez más tarde.',
     StartFinancialsCreateRequestDetailedError: 'No se pudo crear su solicitud para ${accountingPackage}, estado de respuesta: ${responseStatus}',
     StartFinancialsCreateRequestSummaryError: 'Se produjo un error comunicándose con el servidor, por favor intentar otra vez más tarde.',
     StartFinancialsCreateWindowDetailedError: 'Falló la creación de la ventana para conectar con el sistema contable del cliente ${accountingPackage}',
@@ -51,4 +54,5 @@ export const translations: BaseTextContent = {
     TermsBullet3Title: 'Conexión de solo lectura',
     TermsBullet3Description: 'No se alterará ninguna información en su sistema contable. Este es un flujo de datos unidireccional.',
     Continue: 'Seguir',
+    Dismiss: 'Descartar'
 }

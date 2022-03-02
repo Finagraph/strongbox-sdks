@@ -5,7 +5,7 @@ import * as React from 'react';
 import { AccountingPackage } from '../../../Models/AccountingPackages';
 import { IDelegatedAccessToken } from '../../../Models/Api/ClientBase';
 
-import { StrongboxConnectionDescriptor } from '../../../Utils/ConnectStrongbox';
+import { StrongboxConnectionRequest } from '../../../Utils/ConnectStrongbox';
 import { SimpleModal } from '../../StrongboxModal';
 import StrongboxLinker, { StrongboxLinkerChildProps } from '../../StrongboxLinker/StrongboxLinker';
 
@@ -26,8 +26,8 @@ type Props = {
     accountingPackage: AccountingPackage;
     entityId: string;
     strongboxCxnRequestDescriptor?: ConnectionRequestDescriptor,
-    connectionInfo?: StrongboxConnectionDescriptor,
-    onJobCreated?: (financialRecordId: string) => void;
+    cxnRequest?: StrongboxConnectionRequest,
+    onConnected?: (cxnRequest: StrongboxConnectionRequest, apiRequestParameters?: ConnectionRequestDescriptor) => void,
     onRequestClose?: ((success: boolean) => void);
     open: boolean;
     strongboxUrl: string;
@@ -146,7 +146,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         return open && (
             <StrongboxLinker
                 strongboxCxnRequestDescriptor={this.props.strongboxCxnRequestDescriptor}
-                connectionInfo={this.props.connectionInfo}
+                cxnRequest={this.props.cxnRequest}
                 autoStartOnAuthorized={true}
                 datasourceId={this.props.accountingPackage}
                 theme={this.props.theme}
@@ -187,7 +187,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                                 <button
                                     style={buttonStyle}
                                     onClick={() => {
-                                        props.startJob((this.props.connectionInfo && this.props.connectionInfo.existingConnectionId) || (''));
+                                        props.connectionInitiated((this.props.cxnRequest && this.props.cxnRequest.existingConnectionId) || (''));
                                     }}
                                     disabled={this.props.disabled}
                                 >

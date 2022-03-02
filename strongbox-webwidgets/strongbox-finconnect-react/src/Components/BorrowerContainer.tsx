@@ -5,20 +5,26 @@ import ChoosePackage, { AccountingPackageToShow } from './ChoosePackage';
 import AcceptTerms from './AcceptTerms';
 import LinkProgress from './LinkProgress';
 import Congratulations from './Congratulations';
+import WorkingStep from './WorkingStep';
+import ErrorPage from './ErrorPage';
 import { BorrowerSteps } from '../Models/BorrowerState';
 import { LinkerModal } from './StrongboxLinker/LinkerModal';
+import { ErrorState } from './ErrorPage';
 
 import { TextContent } from '../Text/TextContent';
 
 import {
+    ConnectAccountingSystem,
     GetFinancialsConnectionDescriptor,
+    ImportFinancials,
     LenderConnectionOptions,
     LoadConnectWindow,
-    StartFinancialsImport,
-    StrongboxConnectionDescriptor
+    StrongboxConnectionDescriptor,
+    StrongboxConnectionRequest,
+    StrongboxImportRequest
 } from '../Utils/ConnectStrongbox';
 
-import { ConnectionRequestDescriptor } from '../Models/Api/strongbox.models';
+import { ConnectionRequest, ConnectionRequestDescriptor } from '../Models/Api/strongbox.models';
 
 import { Theme } from '../Models/Theme/Theme';
 import { AccountingPackage } from '../Models/AccountingPackages';
@@ -46,11 +52,6 @@ export type BorrowerContainerProps = {
     theme?: Theme;
 }
 
-type ErrorState = {
-    msg: string | undefined;
-    detailedMsg: string | undefined;
-}
-
 const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerContainerProps): React.ReactElement => {
     const _linkModalRef: React.RefObject<any> = React.createRef();
 
@@ -59,22 +60,12 @@ const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerCont
         divStyle['backgroundColor'] = props.theme.palette.borrowerInteractionBackground;
     }
 
-    const [connectionInfo, setConnectionInfo] = React.useState<StrongboxConnectionDescriptor | undefined>(undefined);
+    const [currentCxnRequest, setCurrentCxnRequest] = React.useState<StrongboxConnectionRequest | undefined>(undefined);
     const [showingAuthWindow, setShowingAuthWindow] = React.useState<boolean>(false);
-    const [errorState, setErrorState] = React.useState<ErrorState>({
-        msg: undefined,
-        detailedMsg: undefined,
-    });
-
-    const OnJobCreated = (financialRecordId: string): void => {
-        props.onJobCreated && props.onJobCreated(financialRecordId);
-        setConnectionInfo(undefined);
-        setShowingAuthWindow(false);
-        props.onNextStep(props.step);
-    }
+    const [errorState, setErrorState] = React.useState<ErrorState | undefined>(undefined);
 
     const OnError = (msg: string, detailedMsg: string): void => {
-        setConnectionInfo(undefined);
+        setCurrentCxnRequest(undefined);
         setShowingAuthWindow(false);
         setErrorState({
             msg,
@@ -82,8 +73,35 @@ const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerCont
         });
     }
 
+    const OnConnected = (cxnRequest: StrongboxConnectionRequest, apiRequestParameters?: ConnectionRequestDescriptor): void => {
+        // existingConnectionId won't be null here, it'll be filled in before
+        // this callback is invoked.
+        const importRequest: StrongboxImportRequest = {
+            accountingPackage: cxnRequest.accountingPackage,
+            lenderManagedOptions: props.financialImportOptions,
+            initiator: 'widget',
+            delegatedAccessToken: props.accessToken,
+            orgId: props.entityId,
+            strongboxUri: props.strongboxUri,
+            submissionId: cxnRequest.submissionId,
+            connectionId: cxnRequest.existingConnectionId || '',
+        };
+        setCurrentCxnRequest(undefined);
+        props.onNextStep(props.step);
+
+        ImportFinancials(
+            importRequest,
+            OnError,
+            (financialRecordId: string, importRequest: StrongboxImportRequest) => {
+                props.onJobCreated && props.onJobCreated(financialRecordId);
+                setShowingAuthWindow(false);
+                props.onNextStep(props.step);
+            }
+        )
+    }
+
     const OnAborted = (): void => {
-        setConnectionInfo(undefined);
+        setCurrentCxnRequest(undefined);
         setShowingAuthWindow(false);
     }
 
@@ -99,11 +117,17 @@ const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerCont
             lenderManagedOptions: props.financialImportOptions,
         };
 
-        if (!!props.showConnectionDialog) {
-            setConnectionInfo(connectionInfo);
-        } else {
-            const cxnWindowHandle = LoadConnectWindow(connectionInfo, undefined);
+        const cxnRequest: StrongboxConnectionRequest = {
+            accountingPackage,
+            delegatedAccessToken: props.accessToken,
+            strongboxUri: props.strongboxUri,
+            orgId: props.entityId,
+        };
 
+        if (!!props.showConnectionDialog) {
+            setCurrentCxnRequest(cxnRequest);
+        } else {
+            const cxnWindowHandle = LoadConnectWindow(undefined);
             if (!cxnWindowHandle) {
                 setErrorState({
                     msg: props.textContent.TextValue('StartFinancialsCreateWindowSummaryError'),
@@ -120,12 +144,12 @@ const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerCont
 
                             setShowingAuthWindow(true);
 
-                            StartFinancialsImport(
-                                connectionInfo,
+                            ConnectAccountingSystem(
+                                cxnRequest,
                                 cxnDescriptor,
                                 cxnWindowHandle,
                                 OnError,
-                                OnJobCreated,
+                                OnConnected,
                                 OnAborted,
                                 () => { return false },
                                 props.textContent
@@ -156,63 +180,84 @@ const BorrowerContainer: React.FC<BorrowerContainerProps> = (props: BorrowerCont
         containerClassName += ' finagraph-strongbox-main-borrower-container-centered';
     }
 
-    return (
-        <div style={divStyle} className={containerClassName}>
-            {props.step === BorrowerSteps.acceptTerms && (
-                <AcceptTerms
+    if (!!errorState) {
+        return (
+            <div style={divStyle} className={containerClassName}>
+                <ErrorPage
                     abort={AbortIntroPages}
-                    onTermsAccepted={props.onTermsAccepted}
-                    partnerName={props.partnerName}
+                    onDismiss={() => { setErrorState(undefined); props.onNextStep(props.step, BorrowerSteps.choosePackage); }}
                     textContent={props.textContent}
                     theme={props.theme}
+                    errorText={[errorState.msg, errorState.detailedMsg]}
                 />
-            )}
-            {props.step === BorrowerSteps.choosePackage && (
-                <ChoosePackage
-                    abort={AbortIntroPages}
-                    accountingPackages={props.accountingPackages}
-                    theme={props.theme}
-                    showLinkDialog={ConnectToAccountingPackage}
-                    children={props.children}
-                    showError={errorState.msg}
-                    authWindowActive={!!connectionInfo || showingAuthWindow}
-                    buttonsDisabled={!!connectionInfo || showingAuthWindow}
-                    textContent={props.textContent}
-                />
-            )}
-            {props.step === BorrowerSteps.progress && (
-                <LinkProgress
-                    theme={props.theme}
-                    onProgressComplete={ProgressComplete}
-                    children={props.children}
-                    linkPctgComplete={props.linkPctgComplete}
-                    onLinkPctgChange={props.onLinkPctgChange}
-                    textContent={props.textContent}
-                />
-            )}
-            {props.step === BorrowerSteps.congratulations && (
-                <Congratulations
-                    theme={props.theme}
-                    onDone={CongratsComplete}
-                    children={props.children}
-                    textContent={props.textContent}
-                />
-            )}
-            {props.children}
-            {!!connectionInfo &&
-                <LinkerModal
-                    connectionInfo={connectionInfo}
-                    theme={props.theme}
-                    onCompleted={(success: boolean) => {
-                        setConnectionInfo(undefined);
-                    }}
-                    onJobCreated={OnJobCreated}
-                    checkAuthorizationStatus={false}
-                    textContent={props.textContent}
-                />
-            }
-        </div>
-    );
+            </div>
+        );
+    } else {
+        return (
+            <div style={divStyle} className={containerClassName}>
+                {props.step === BorrowerSteps.acceptTerms && (
+                    <AcceptTerms
+                        abort={AbortIntroPages}
+                        onTermsAccepted={props.onTermsAccepted}
+                        partnerName={props.partnerName}
+                        textContent={props.textContent}
+                        theme={props.theme}
+                    />
+                )}
+                {props.step === BorrowerSteps.choosePackage && (
+                    <ChoosePackage
+                        abort={AbortIntroPages}
+                        accountingPackages={props.accountingPackages}
+                        theme={props.theme}
+                        showLinkDialog={ConnectToAccountingPackage}
+                        children={props.children}
+                        authWindowActive={!!currentCxnRequest || showingAuthWindow}
+                        buttonsDisabled={!!currentCxnRequest || showingAuthWindow}
+                        textContent={props.textContent}
+                    />
+                )}
+                {props.step === BorrowerSteps.importingFinancials && (
+                    <WorkingStep
+                        theme={props.theme}
+                        children={props.children}
+                        textContent={props.textContent}
+                        content={props.textContent.TextValue('ImportingFinancials')}
+                    />
+                )}
+                {props.step === BorrowerSteps.progress && (
+                    <LinkProgress
+                        theme={props.theme}
+                        onProgressComplete={ProgressComplete}
+                        children={props.children}
+                        linkPctgComplete={props.linkPctgComplete}
+                        onLinkPctgChange={props.onLinkPctgChange}
+                        textContent={props.textContent}
+                    />
+                )}
+                {props.step === BorrowerSteps.congratulations && (
+                    <Congratulations
+                        theme={props.theme}
+                        onDone={CongratsComplete}
+                        children={props.children}
+                        textContent={props.textContent}
+                    />
+                )}
+                {props.children}
+                {!!currentCxnRequest &&
+                    <LinkerModal
+                        cxnRequest={currentCxnRequest}
+                        theme={props.theme}
+                        onCompleted={(success: boolean) => {
+                            setCurrentCxnRequest(undefined);
+                        }}
+                        onConnected={OnConnected}
+                        checkAuthorizationStatus={false}
+                        textContent={props.textContent}
+                    />
+                }
+            </div>
+        );
+    }
 }
 
 export default BorrowerContainer;

@@ -4,7 +4,7 @@ import { AccountingPackage } from '../../../Models/AccountingPackages';
 import { IOpenableModal } from '../../../Models/IOpenableModal';
 import { LinkState } from '../../../Models/LinkerSession';
 
-import { StrongboxConnectionDescriptor } from '../../../Utils/ConnectStrongbox';
+import { StrongboxConnectionRequest } from '../../../Utils/ConnectStrongbox';
 
 import StrongboxLinkModal from './StrongboxLinkModal';
 import { Theme } from '../../../Models/Theme/Theme';
@@ -17,7 +17,7 @@ export interface IStrongboxLinkModalContainerProps {
     accountingPackage: AccountingPackage;
     entityId: string;
     strongboxCxnRequestDescriptor?: ConnectionRequestDescriptor;
-    connectionRequestInfo?: StrongboxConnectionDescriptor;
+    cxnRequest?: StrongboxConnectionRequest;
     strongboxUrl: string;
     submissionId?: string;
     delegatedAccessToken: IDelegatedAccessToken;
@@ -50,7 +50,7 @@ class StrongboxLinkModalContainer extends React.PureComponent<Props, State> impl
         const {
             accountingPackage,
             entityId,
-            connectionRequestInfo,
+            cxnRequest,
             delegatedAccessToken,
             strongboxUrl,
             submissionId,
@@ -66,7 +66,7 @@ class StrongboxLinkModalContainer extends React.PureComponent<Props, State> impl
                 accountingPackage={accountingPackage}
                 entityId={entityId}
                 strongboxCxnRequestDescriptor={this.props.strongboxCxnRequestDescriptor}
-                connectionInfo={this.props.connectionRequestInfo}
+                cxnRequest={this.props.cxnRequest}
                 onRequestClose={this.props.onRequestClose}
                 executeConnect={this.props.executeConnect}
                 executeDisconnect={this.props.executeDisconnect}

@@ -6,6 +6,7 @@
 export enum BorrowerSteps {
     acceptTerms,
     choosePackage,
+    importingFinancials,
     configureAccounting,
     progress,
     congratulations,

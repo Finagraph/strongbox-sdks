@@ -110,8 +110,40 @@ export type StrongboxConnectionDescriptor = {
     requestInformation?: RequestInformation,
 };
 
+/*
+ * StrongboxConnectionRequest is used for containing parameters used in connecting an accounting system.  These
+ * parameters are used for the following:
+ *
+ * 1. Finding an existing connection for an accounting package.
+ *
+ * 2. Get a connection request descriptor including an id for the connection.  This will include the URL that can be
+ * invoked to connect with the accounting package.  This is done prior to actually trying to load and watch the
+ * connection window so that the URL can be loaded directly in the onClick handler of the button which will invoke
+ * the window.   This helps with popup blocking.
+ */
+
+export type StrongboxConnectionRequest = {
+    accountingPackage: AccountingPackage,
+    delegatedAccessToken: IDelegatedAccessToken,
+    strongboxUri: string,
+    orgId: string,
+    existingConnectionId?: string,
+    submissionId?: string,
+};
+
+export type StrongboxImportRequest = {
+    accountingPackage: AccountingPackage,
+    lenderManagedOptions?: LenderConnectionOptions,
+    initiator?: string,
+    requestInformation?: RequestInformation,
+    delegatedAccessToken: IDelegatedAccessToken,
+    orgId: string,
+    strongboxUri: string,
+    submissionId?: string,
+    connectionId: string,
+};
+
 export const LoadConnectWindow = (
-    connectionInfo: StrongboxConnectionDescriptor,
     cxnRequestDescriptor: ConnectionRequestDescriptor | undefined,
     onOpen?: (authWindow: Window) => void
 ): Window | undefined => {
@@ -194,51 +226,54 @@ function toISOLocalDateString(d: Date): string {
 }
 
 /*
- * Shows authorization dialog for the accounting package provided and begins a financials import.  There are 3 distinct possible outcomes.
- * For each of the outcomes, 1 and only 1 of the terminal functions (onError, onAborted, onJobCreated) will be called
+ * Shows authorization dialog for the accounting package provided.  There are 3 distinct possible outcomes.
+ * For each of the outcomes, 1 and only 1 of the terminal functions (onError, onAborted, onConnected) will be called
  * 
  * 1. Error. Something bad happened, onError is called.
  * 2. User closed the authorization window but didn't authenticate.   onAborted
- * 3. User authorized and a connection was initiated. onJobCreated
+ * 3. User authorized and the accounting system is connected. onConnected
  * 
  * cxnRequestDescriptor can be undefined in the event that connectionInfo has an existing connection id.
  */
 
-export const StartFinancialsImport = async (
-    connectionInfo: StrongboxConnectionDescriptor,
-    cxnRequestDescriptor: ConnectionRequestDescriptor | undefined,
+export const ConnectAccountingSystem = async (
+    cxnRequest: StrongboxConnectionRequest,
+    apiRequestParameters: ConnectionRequestDescriptor | undefined,
     windowHandle: Window | undefined,
     onError: ((msg: string, detailedMsg: string) => void) | undefined,
-    onJobCreated: ((financialRecordId: string) => void) | undefined,
+    onConnected: ((cxnRequest: StrongboxConnectionRequest, apiRequestParameters?: ConnectionRequestDescriptor) => void) | undefined,
     onAborted: (() => void) | undefined,
     isCancelled: () => boolean,
-    textContent: TextContent,
+    textContent?: TextContent,
 ): Promise<void> => {
-    try {
-        const connections = new ConnectionsClient(connectionInfo.delegatedAccessToken, connectionInfo.strongboxUri);
-        const financials = new FinancialRecordsClient(connectionInfo.delegatedAccessToken, connectionInfo.strongboxUri);
+    if (!textContent) {
+        textContent = new TextContent('en');
+    }
 
-        let useConnectionId = connectionInfo.existingConnectionId;
+    try {
+        const connections = new ConnectionsClient(cxnRequest.delegatedAccessToken, cxnRequest.strongboxUri);
+
+        let useConnectionId = cxnRequest.existingConnectionId;
 
         if (!useConnectionId) {
             var success = false;
 
-            if (!(windowHandle && cxnRequestDescriptor)) {
+            if (!(windowHandle && apiRequestParameters)) {
                 if (!!onError) {
                     const detailedError =
                         textContent.TextValueWithReplacement(
-                            'StartFinancialsCreateRequestDetailedError',
+                            'ConnectAccountingSystemDetailedError',
                             {
                                 placeHolder: '${accountingPackage}',
-                                replacement: connectionInfo.accountingPackage,
+                                replacement: cxnRequest.accountingPackage,
                             },
                             {
                                 placeHolder: '${responseStatus}',
-                                replacement: 'required parameter windowHandle or cxnRequestDescriptor is missing',
+                                replacement: 'required parameter windowHandle or apiRequestParameters is missing',
                             }
                         );
 
-                    onError(textContent.TextValue('StartFinancialsCreateWindowSummaryError'), detailedError);
+                    onError(textContent.TextValue('ConnectAccountingSystemSummaryError'), detailedError);
                 }
 
                 return;
@@ -250,13 +285,13 @@ export const StartFinancialsImport = async (
             do {
                 const windowClosedStatus = ((windowHandle.closed) || (windowHandle.opener && windowHandle.opener.closed));
 
-                const cxnResponse = await connections.getRequest(connectionInfo.orgId, cxnRequestDescriptor.id);
+                const cxnResponse = await connections.getRequest(cxnRequest.orgId, apiRequestParameters.id);
                 if (cxnResponse) {
                     cxnStatus = cxnResponse.result;
 
                     if ((cxnStatus) && (cxnStatus.status === "Success")) {
                         success = true;
-                    } else if ((windowClosedStatus) || ((cxnStatus) && (cxnStatus.errorCode !== 'None')))  {
+                    } else if ((windowClosedStatus) || ((cxnStatus) && (cxnStatus.errorCode !== 'None'))) {
                         complete = true;
                     } else {
                         await new Promise(r => setTimeout(r, watchAuthWindowTimeout));
@@ -274,14 +309,39 @@ export const StartFinancialsImport = async (
             }
         }
 
+        onConnected && onConnected(
+            {
+                ...cxnRequest,
+                existingConnectionId: useConnectionId
+            },
+            apiRequestParameters
+        );
+    } catch (connectException) {
+        onError && onError(textContent.TextValue('ConnectAccountingSystemSummaryError'), connectException);
+    }
+}
+
+export const ImportFinancials = async (
+    importRequest: StrongboxImportRequest,
+    onError: ((msg: string, detailedMsg: string) => void) | undefined,
+    onImportStarted: ((financialRecordId: string, importRequest: StrongboxImportRequest) => void) | undefined,
+    textContent?: TextContent,
+): Promise<void> => {
+    if (!textContent) {
+        textContent = new TextContent('en');
+    }
+
+    try {
+        const financials = new FinancialRecordsClient(importRequest.delegatedAccessToken, importRequest.strongboxUri);
+
         let reportingDate: string;
 
-        if (connectionInfo.lenderManagedOptions && connectionInfo.lenderManagedOptions.mostRecentDate) {
-            let month = connectionInfo.lenderManagedOptions.mostRecentDate.month;
-            let year = connectionInfo.lenderManagedOptions.mostRecentDate.year;
+        if (importRequest.lenderManagedOptions && importRequest.lenderManagedOptions.mostRecentDate) {
+            let month = importRequest.lenderManagedOptions.mostRecentDate.month;
+            let year = importRequest.lenderManagedOptions.mostRecentDate.year;
             // See the big comment where mostRecentDate is defined about it's actual use.  It is 1 based
             // but may be 0 to just get the full month passed in month.
-            let day = connectionInfo.lenderManagedOptions.mostRecentDate.day;
+            let day = importRequest.lenderManagedOptions.mostRecentDate.day;
 
             // Months are 0 based in javascript and also in the lenderManagedOptions.  
             // When you pass 0 for the day, it will get you the end
@@ -302,35 +362,35 @@ export const StartFinancialsImport = async (
 
         let metadata: ConsumerMetadata[] | undefined = undefined;
 
-        if (connectionInfo.submissionId) {
+        if (importRequest.submissionId) {
             metadata = [];
             metadata.push(new ConsumerMetadata({
                 label: 'SubmissionId',
-                value: connectionInfo.submissionId,
+                value: importRequest.submissionId,
             }));
         }
 
-        if (connectionInfo.initiator) {
+        if (importRequest.initiator) {
             // could still be undefined.
-            if (!metadata) { 
+            if (!metadata) {
                 metadata = [];
             }
             metadata.push(new ConsumerMetadata({
                 label: 'Initiator',
-                value: connectionInfo.initiator,
+                value: importRequest.initiator,
             }));
-        } 
+        }
 
         const parameters: FinancialImportParameters = new FinancialImportParameters({
-            accountingConnectionId: useConnectionId,
+            accountingConnectionId: importRequest.connectionId,
             reportingEndDate: reportingDate,
             consumerMetadata: metadata,
         });
 
-        if (connectionInfo.lenderManagedOptions) {
+        if (importRequest.lenderManagedOptions) {
             let privacyControls: PrivacyControl[] = [];
 
-            if (connectionInfo.lenderManagedOptions.anonymizeCustomersAndVendors) {
+            if (importRequest.lenderManagedOptions.anonymizeCustomersAndVendors) {
                 privacyControls = ["AnonymizeContactLists", "RedactTransactionMemos"];
             }
 
@@ -339,7 +399,7 @@ export const StartFinancialsImport = async (
                 transactionsPeriod,
                 receivablesPeriod,
                 payablesPeriod,
-            } = connectionInfo.lenderManagedOptions;
+            } = importRequest.lenderManagedOptions;
 
             // At the strongbox level, numberOfPeriods includes year to date and month to date, so
             // if you want YTD plus 1 extra FY, you would pass 2.  If you pass 0, it turns that 
@@ -395,9 +455,9 @@ export const StartFinancialsImport = async (
             })
 
             parameters.accountingDataImportOptions = importOptions;
-        } 
+        }
 
-        const importResponse = await financials.import(connectionInfo.orgId.toLowerCase(), parameters);
+        const importResponse = await financials.import(importRequest.orgId.toLowerCase(), parameters);
 
         if (!goodResponse(importResponse.status)) {
             if (!!onError) {
@@ -406,7 +466,7 @@ export const StartFinancialsImport = async (
                         'StartFinancialsImportDetailedError',
                         {
                             placeHolder: '${accountingPackage}',
-                            replacement: connectionInfo.accountingPackage,
+                            replacement: importRequest.accountingPackage,
                         }
                     );
                 onError(textContent.TextValue('StartFinancialsImportSummaryError'), detailedError);
@@ -417,40 +477,10 @@ export const StartFinancialsImport = async (
 
         const importStatus = importResponse.result;
 
-        onJobCreated && onJobCreated(importStatus.financialRecordId);
+        onImportStarted && onImportStarted(importStatus.financialRecordId, importRequest);
     } catch (connectException) {
         onError && onError(textContent.TextValue('StartFinancialsImportSummaryError'), connectException);
     }
-}
-
-// connectionRequestId will be a value taken from a ConnectionRequestDescriptor's id property.   You get 
-// one of those from callin GetFinancialsConnectionDescriptor.
-//
-// This is different than existingConnectionId which is an actual connection.  If this is provided the entire
-// process of monitoring the connection window can be skipped and the windowHandle parameter can be undefined.
-//
-// cxnRequestDescriptor can be undefined in the event that connectionInfo has an existing connection id.
-
-export const FinancialsImport = async (
-    connectionInfo: StrongboxConnectionDescriptor,
-    cxnRequestDescriptor: ConnectionRequestDescriptor | undefined,
-    windowHandle: Window | undefined,
-    onError: ((msg: string, detailedMsg: string) => void) | undefined,
-    onJobCreated: ((financialRecordId: string) => void) | undefined,
-    onAborted: (() => void) | undefined,
-    isCancelled: () => boolean
-): Promise<void> => {
-    const textContent = new TextContent('en');
-    await StartFinancialsImport(
-        connectionInfo,
-        cxnRequestDescriptor,
-        windowHandle,
-        onError,
-        onJobCreated,
-        onAborted,
-        isCancelled,
-        textContent
-    );
 }
 
 export const FindConnection = async (accessToken: IDelegatedAccessToken, strongboxUri: string, orgId: string, accountingPackage: AccountingPackage): Promise<ConnectionDescriptor | undefined> => {

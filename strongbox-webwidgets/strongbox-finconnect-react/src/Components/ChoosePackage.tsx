@@ -38,7 +38,6 @@ export type ChoosePackageProps = {
     abort?: () => void;
     showLinkDialog: (accountingPackage: AccountingPackage) => void;
     children?: JSX.Element;
-    showError?: string | undefined;
     textContent: TextContent;
     authWindowActive: boolean;
     buttonsDisabled: boolean;
@@ -124,12 +123,6 @@ const ChoosePackage: React.FC<ChoosePackageProps> = (props: ChoosePackageProps):
                 authWindowActive={props.authWindowActive}
                 abort={props.abort}
             />
-            { props.showError && (
-                <p style={{
-                    color: "red",
-                    marginBottom: "15px"
-                }}>{props.showError}</p>
-            )}
             { props.authWindowActive && (
                 <p style={{
                     marginBottom: "15px"

@@ -47,15 +47,18 @@ import BorrowerContainer from './Components/BorrowerContainer';
 import { BorrowerState, BorrowerSteps, ControlState } from './Models/BorrowerState';
 
 import {
+    ConnectAccountingSystem,
     DisconnectConnection,
-    FinancialsImport,
     FindConnection,
     GetFinancialsConnectionDescriptor,
     ImportDayMonthYear,
+    ImportFinancials,
     LenderConnectionOptions,
     LoadConnectWindow,
     RequestInformation,
     StrongboxConnectionDescriptor,
+    StrongboxConnectionRequest,
+    StrongboxImportRequest
 } from './Utils/ConnectStrongbox';
 
 import { BuildThemeStyle, Theme } from './Models/Theme/Theme';
@@ -313,6 +316,9 @@ const App: React.FC<ISBLinkAccountingPackageProps> = (props: ISBLinkAccountingPa
                         break;
                     case BorrowerSteps.choosePackage:
                         initOrgName();
+                        nextStep = BorrowerSteps.importingFinancials;
+                        break;
+                    case BorrowerSteps.importingFinancials:
                         nextStep = BorrowerSteps.progress;
                         break;
                     case BorrowerSteps.progress:
@@ -346,14 +352,17 @@ const App: React.FC<ISBLinkAccountingPackageProps> = (props: ISBLinkAccountingPa
 
 export default App
 export {
+    ConnectAccountingSystem,
     DisconnectConnection,
-    FinancialsImport,
     FindConnection,
     GetFinancialsConnectionDescriptor,
+    ImportFinancials,
     LenderConnectionOptions,
     LinkerModal,
     LoadConnectWindow,
     RequestInformation,
     StrongboxConnectionDescriptor,
+    StrongboxConnectionRequest,
+    StrongboxImportRequest,
     Theme
 }
