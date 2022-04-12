@@ -35,10 +35,12 @@
     LinkModalDescriptionXero: string,
     LinkModalDescriptionSageIntacct: string,
     LinkModalDescriptionExample: string,
+    LinkModalDescriptionFreeAgent: string,
     LinkModalQBOneWay: string;
     LinkModalXeroOneWay: string;
     LinkModalSageIntacctOneWay: string;
     LinkModalExampleOneWay: string;
+    LinkModalFreeAgentOneWay: string;
     LinkModalWorking: string;
     LinkModalUpdateFinancialsNow: string;
     TermsDescriptionParagraph1PreSBX: string,

@@ -43,10 +43,13 @@ export const translations: BaseTextContent = {
         'authorize a connection to Sage Intacct.',
     LinkModalDescriptionExample: 'After clicking \'Connect to DEX\', You will be prompted to ' +
         'authorize a connection to DEX.',
+    LinkModalDescriptionFreeAgent: 'After clicking \'Connect to FreeAgent\', You will be prompted to ' +
+        'authorize a connection to FreeAgent.',
     LinkModalQBOneWay: 'Information in QuickBooks will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalXeroOneWay: 'Information in Xero will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalSageIntacctOneWay: 'Information in Sage Intacct will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalExampleOneWay: 'Information in DEX will never be altered in any way. This is a fully secure, one-way data stream.', 
+    LinkModalFreeAgentOneWay: 'Information in FreeAgent will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalWorking: 'Working...',
     LinkModalUpdateFinancialsNow: 'Update Financials Now',
     TermsDescriptionParagraph1PreSBX: '${partnerName} uses',

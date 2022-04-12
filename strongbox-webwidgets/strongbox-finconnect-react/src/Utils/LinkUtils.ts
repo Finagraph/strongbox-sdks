@@ -26,6 +26,8 @@ export function AccountingPackageConnectPrompt(accountingPackage: AccountingPack
             return `${connectTo} Sage Intacct`;
         case AccountingPackage.Example:
             return `${connectTo} DEX`;
+        case AccountingPackage.FreeAgent:
+            return `${connectTo} FreeAgent`;
         default:
             return unknown;
     }
@@ -43,6 +45,8 @@ export function AccountingPackageName(accountingPackage: AccountingPackage): str
             return 'Sage Intacct';
         case AccountingPackage.Example:
             return 'Example';
+        case AccountingPackage.FreeAgent:
+            return 'FreeAgent';
         default:
             return 'Unknown Accounting Package';
     }

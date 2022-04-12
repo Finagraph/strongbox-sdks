@@ -38,6 +38,7 @@ import qbImg from '../Images/QuickBooks.png';
 import xeroImg from '../Images/xero.png';
 import sageIntacctImg from '../Images/sageIntacct.png';
 import exampleImg from '../Images/DEX-LOGO.png';
+import freeAgentImg from '../Images/freeagent.png';
 
 import '../styles.scss'
 
@@ -63,6 +64,8 @@ const GetButtonImage = (packageName: AccountingPackage): any => {
         result = sageIntacctImg;
     } else if (packageName === AccountingPackage.Example) {
         result = exampleImg;
+    } else if (packageName === AccountingPackage.FreeAgent) {
+        result = freeAgentImg;
     }
 
     return result;

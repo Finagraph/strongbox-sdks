@@ -51,10 +51,12 @@ type State = {
     descriptionTextXero: string;
     descriptionTextSageIntacct: string;
     descriptionTextExample: string;
+    descriptionTextFreeAgent: string;
     qbOneWay: string;
     sageIntacctOneWay: string;
     xeroOneWay: string;
     exampleOneWay: string;
+    freeAgentOneWay: string;
     working: string;
     updateFinancialsNow: string;
     disconnect: string;
@@ -77,10 +79,12 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             descriptionTextXero: translations.LinkModalDescriptionXero,
             descriptionTextSageIntacct: translations.LinkModalDescriptionSageIntacct,
             descriptionTextExample: translations.LinkModalDescriptionExample,
+            descriptionTextFreeAgent: translations.LinkModalDescriptionFreeAgent,
             qbOneWay: translations.LinkModalQBOneWay,
             sageIntacctOneWay: translations.LinkModalSageIntacctOneWay,
             xeroOneWay: translations.LinkModalXeroOneWay,
             exampleOneWay: translations.LinkModalExampleOneWay,
+            freeAgentOneWay: translations.LinkModalFreeAgentOneWay,
             working: translations.LinkModalWorking,
             updateFinancialsNow: translations.LinkModalUpdateFinancialsNow,
             disconnect: translations.DisconnectFromAccountingPkg,
@@ -322,6 +326,21 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             </>
         );
     }
+    
+    private RenderConnectToFreeAgent = (props: StrongboxLinkerChildProps): React.ReactNode => {
+        return (
+            <>
+                <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextFreeAgent}</span>
+                <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
+                    {this.state.freeAgentOneWay}
+                </span>
+                {props.renderAuthButton({
+                    className: 'finagraph-strongbox-linker__auth-button',
+                })}
+            </>
+        );
+    }
+
 
     private RenderAccountingPackage = (props: StrongboxLinkerChildProps): React.ReactNode => {
         if (this.props.accountingPackage === AccountingPackage.Xero) {
@@ -334,6 +353,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToSageIntacct(props);
         } else if (this.props.accountingPackage === AccountingPackage.Example) {
             return this.RenderConnectToExample(props);
+        } else if (this.props.accountingPackage === AccountingPackage.FreeAgent) {
+            return this.RenderConnectToFreeAgent(props);
         } else {
             return (<span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>Unknown Accounting Package</span>);
         }

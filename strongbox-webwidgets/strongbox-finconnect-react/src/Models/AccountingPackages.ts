@@ -1,13 +1,14 @@
 ﻿export enum AccountingPackage {
-    QuickBooksOnline = "QuickBooksOnline",
-    SageOne = "SageOne",
-    SageIntacct = "SageIntacct",
-    QuickBooksDesktop = "QuickBooksDesktop",
     AccountRightLive = "AccountRightLive",
-    FreshBooks = "FreshBooks",
     Dynamics365 = "Dynamics365",
-    Xero = "Xero",
     Example = "Example",
+    FreeAgent = "FreeAgent",
+    FreshBooks = "FreshBooks",
+    QuickBooksDesktop = "QuickBooksDesktop",
+    QuickBooksOnline = "QuickBooksOnline",
+    SageIntacct = "SageIntacct",
+    SageOne = "SageOne",
+    Xero = "Xero",
 }
 
 export type AccountingPkgPresentation = {
