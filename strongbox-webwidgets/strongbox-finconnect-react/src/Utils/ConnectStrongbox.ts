@@ -479,7 +479,20 @@ export const ImportFinancials = async (
 
         onImportStarted && onImportStarted(importStatus.financialRecordId, importRequest);
     } catch (connectException) {
-        onError && onError(textContent.TextValue('StartFinancialsImportSummaryError'), connectException);
+        if (!!connectException.parameter) {
+            const detailedError =
+                textContent.TextValueWithReplacement(
+                    'StartFinancialsImportDetailedError',
+                    {
+                        placeHolder: '${accountingPackage}',
+                        replacement: importRequest.accountingPackage,
+                    }
+                );
+
+            onError && onError(detailedError, connectException.parameter)
+        } else {
+            onError && onError(textContent.TextValue('StartFinancialsImportSummaryError'), connectException);
+        }
     }
 }
 
