@@ -28,6 +28,8 @@ export function AccountingPackageConnectPrompt(accountingPackage: AccountingPack
             return `${connectTo} DEX`;
         case AccountingPackage.FreeAgent:
             return `${connectTo} FreeAgent`;
+        case AccountingPackage.Netsuite:
+            return `${connectTo} NetSuite`;
         default:
             return unknown;
     }
@@ -47,6 +49,8 @@ export function AccountingPackageName(accountingPackage: AccountingPackage): str
             return 'Example';
         case AccountingPackage.FreeAgent:
             return 'FreeAgent';
+        case AccountingPackage.Netsuite:
+            return 'NetSuite';
         default:
             return 'Unknown Accounting Package';
     }

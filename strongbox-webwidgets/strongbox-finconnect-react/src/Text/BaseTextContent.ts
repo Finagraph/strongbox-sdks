@@ -36,11 +36,13 @@
     LinkModalDescriptionSageIntacct: string,
     LinkModalDescriptionExample: string,
     LinkModalDescriptionFreeAgent: string,
+    LinkModalDescriptionNetSuite: string,
     LinkModalQBOneWay: string;
     LinkModalXeroOneWay: string;
     LinkModalSageIntacctOneWay: string;
     LinkModalExampleOneWay: string;
     LinkModalFreeAgentOneWay: string;
+    LinkModalNetSuiteOneWay: string;
     LinkModalWorking: string;
     LinkModalUpdateFinancialsNow: string;
     TermsDescriptionParagraph1PreSBX: string,

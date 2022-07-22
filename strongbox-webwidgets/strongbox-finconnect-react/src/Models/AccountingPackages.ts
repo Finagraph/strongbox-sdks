@@ -4,6 +4,7 @@
     Example = "Example",
     FreeAgent = "FreeAgent",
     FreshBooks = "FreshBooks",
+    Netsuite = "Netsuite",
     QuickBooksDesktop = "QuickBooksDesktop",
     QuickBooksOnline = "QuickBooksOnline",
     SageIntacct = "SageIntacct",

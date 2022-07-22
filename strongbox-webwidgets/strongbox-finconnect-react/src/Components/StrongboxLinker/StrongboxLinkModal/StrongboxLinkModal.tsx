@@ -52,11 +52,13 @@ type State = {
     descriptionTextSageIntacct: string;
     descriptionTextExample: string;
     descriptionTextFreeAgent: string;
+    descriptionTextNetSuite: string;
     qbOneWay: string;
     sageIntacctOneWay: string;
     xeroOneWay: string;
     exampleOneWay: string;
     freeAgentOneWay: string;
+    netSuiteOneWay: string;
     working: string;
     updateFinancialsNow: string;
     disconnect: string;
@@ -80,11 +82,13 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             descriptionTextSageIntacct: translations.LinkModalDescriptionSageIntacct,
             descriptionTextExample: translations.LinkModalDescriptionExample,
             descriptionTextFreeAgent: translations.LinkModalDescriptionFreeAgent,
+            descriptionTextNetSuite: translations.LinkModalDescriptionNetSuite,
             qbOneWay: translations.LinkModalQBOneWay,
             sageIntacctOneWay: translations.LinkModalSageIntacctOneWay,
             xeroOneWay: translations.LinkModalXeroOneWay,
             exampleOneWay: translations.LinkModalExampleOneWay,
             freeAgentOneWay: translations.LinkModalFreeAgentOneWay,
+            netSuiteOneWay: translations.LinkModalNetSuiteOneWay,
             working: translations.LinkModalWorking,
             updateFinancialsNow: translations.LinkModalUpdateFinancialsNow,
             disconnect: translations.DisconnectFromAccountingPkg,
@@ -341,6 +345,19 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         );
     }
 
+    private RenderConnectToNetsuite = (props: StrongboxLinkerChildProps): React.ReactNode => {
+        return (
+            <>
+                <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextNetSuite}</span>
+                <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
+                    {this.state.netSuiteOneWay}
+                </span>
+                {props.renderAuthButton({
+                    className: 'finagraph-strongbox-linker__auth-button',
+                })}
+            </>
+        );
+    }
 
     private RenderAccountingPackage = (props: StrongboxLinkerChildProps): React.ReactNode => {
         if (this.props.accountingPackage === AccountingPackage.Xero) {
@@ -355,6 +372,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToExample(props);
         } else if (this.props.accountingPackage === AccountingPackage.FreeAgent) {
             return this.RenderConnectToFreeAgent(props);
+        } else if (this.props.accountingPackage === AccountingPackage.Netsuite) {
+            return this.RenderConnectToNetsuite(props);
         } else {
             return (<span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>Unknown Accounting Package</span>);
         }
