@@ -345,7 +345,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         );
     }
 
-    private RenderConnectToNetsuite = (props: StrongboxLinkerChildProps): React.ReactNode => {
+    private RenderConnectToNetSuite = (props: StrongboxLinkerChildProps): React.ReactNode => {
         return (
             <>
                 <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextNetSuite}</span>
@@ -372,8 +372,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToExample(props);
         } else if (this.props.accountingPackage === AccountingPackage.FreeAgent) {
             return this.RenderConnectToFreeAgent(props);
-        } else if (this.props.accountingPackage === AccountingPackage.Netsuite) {
-            return this.RenderConnectToNetsuite(props);
+        } else if (this.props.accountingPackage === AccountingPackage.NetSuite) {
+            return this.RenderConnectToNetSuite(props);
         } else {
             return (<span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>Unknown Accounting Package</span>);
         }

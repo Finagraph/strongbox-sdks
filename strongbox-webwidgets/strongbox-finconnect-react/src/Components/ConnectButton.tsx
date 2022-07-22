@@ -7,7 +7,7 @@ import qbConnectImg from '../Images/Connect/qbo.png';
 import sageIntacctImg from '../Images/Connect/sageIntacct.png';
 import exampleImg from '../Images/Connect/example.png';
 import freeAgentImg from '../Images/Connect/freeagent.png';
-import netsuiteImg from '../Images/Connect/netsuite.png';
+import netSuiteImg from '../Images/Connect/netsuite.png';
 
 type Props = {
     datasourceId: string;
@@ -39,7 +39,7 @@ export const ConnectButton: React.FC<Props> = (props): React.ReactElement => {
             buttonImg = freeAgentImg;
             break;
         case 'netsuite':
-            buttonImg = netsuiteImg;
+            buttonImg = netSuiteImg;
             break;
     }
 

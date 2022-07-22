@@ -39,7 +39,7 @@ import xeroImg from '../Images/xero.png';
 import sageIntacctImg from '../Images/sageIntacct.png';
 import exampleImg from '../Images/DEX-LOGO.png';
 import freeAgentImg from '../Images/freeagent.png';
-import netsuiteImg from '../Images/netsuite.png';
+import netSuiteImg from '../Images/netsuite.png';
 
 import '../styles.scss'
 
@@ -67,8 +67,8 @@ const GetButtonImage = (packageName: AccountingPackage): any => {
         result = exampleImg;
     } else if (packageName === AccountingPackage.FreeAgent) {
         result = freeAgentImg;
-    } else if (packageName === AccountingPackage.Netsuite) {
-        result = netsuiteImg;
+    } else if (packageName === AccountingPackage.NetSuite) {
+        result = netSuiteImg;
     }
 
     return result;
