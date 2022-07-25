@@ -144,6 +144,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
                 });
             })
             .catch (error => {
+                console.error(`LinkerModal::GetConnection, unable to get connection descriptor for ${this.state.cxnRequestWithId.accountingPackage}`);
                 this.props.onError && this.props.onError(LinkerModalErrorState.FailureFindingExistingConnection);
                 this.setState({
                     gettingConnectionDescriptor: false,
