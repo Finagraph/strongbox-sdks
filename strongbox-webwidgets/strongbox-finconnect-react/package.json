@@ -17,29 +17,29 @@
     "start": "rollup -c -w"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "moment": "^2.29.1",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "moment": "^2.29.4",
     "react-inlinesvg": "^2.1.1",
-    "react-modal": "^3.11.2",
-    "tslib": "^2.0.2"
+    "react-modal": "^3.16.1",
+    "tslib": "^2.4.1"
   },
   "peerDependencies": {
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-image": "^2.0.5",
-    "@types/material-ui": "^0.21.8",
+    "@types/material-ui": "^0.21.12",
     "@types/moment": "^2.13.0",
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2",
+    "@types/react": "^16.14.34",
+    "@types/react-dom": "^16.9.17",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "react-lifecycles-compat": "^3.0.4",
     "rollup": "^1.29.0",
-    "rollup-plugin-sass": "^1.2.9",
+    "rollup-plugin-sass": "^1.12.17",
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^2.8.3"
   },
