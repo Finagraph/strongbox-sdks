@@ -8,6 +8,8 @@ import { LoadConnectWindow, StrongboxConnectionRequest } from '../../Utils/Conne
 import { Theme } from '../../Models/Theme/Theme';
 
 import LoadingIndicator from '../LoadingIndicator/LoadingIndicator';
+import { OverlayType } from '../LoadingIndicator/LoadingIndicator';
+
 import { ConnectionRequestDescriptor } from '../../Models/Api/strongbox.models';
 
 type ConnectButtonProps = {
@@ -118,7 +120,7 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
 
         return (
             <div>
-                {this.props.isWorking && <LoadingIndicator active={true} overlayType={LoadingIndicator.OverlayType.Dark} />}
+                {this.props.isWorking && <LoadingIndicator active={true} overlayType={OverlayType.Dark} />}
                 <ConnectButton
                     style={{
                         marginTop: '20px',

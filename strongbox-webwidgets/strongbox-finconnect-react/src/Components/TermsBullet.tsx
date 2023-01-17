@@ -2,7 +2,7 @@
 
 import '../styles.scss'
 
-import CheckIcon from '@material-ui/icons/CheckCircleRounded';
+import CheckIcon from '@mui/icons-material/CheckCircleRounded';
 
 export type TermsBulletProps = {
     title: string;

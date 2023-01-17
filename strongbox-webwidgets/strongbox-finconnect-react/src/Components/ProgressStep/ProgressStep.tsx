@@ -1,7 +1,7 @@
 ﻿import * as React from 'react'
 import '../../styles.scss'
 
-import CheckIcon from '@material-ui/icons/CheckRounded';
+import CheckIcon from '@mui/icons-material/CheckRounded';
 
 import { BuildThemeStyle, Theme } from '../../Models/Theme/Theme';
 

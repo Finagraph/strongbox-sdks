@@ -11,6 +11,7 @@ import StrongboxLinker, { StrongboxLinkerChildProps } from '../../StrongboxLinke
 
 import { AccountingPackageConnectPrompt } from '../../../Utils/LinkUtils';
 
+import { OverlayType } from '../../LoadingIndicator/LoadingIndicator';
 import LoadingIndicator from '../../LoadingIndicator/LoadingIndicator';
 
 import { BuildThemeStyle, Theme } from '../../../Models/Theme/Theme';
@@ -242,7 +243,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                             disableActions={this.props.disabled}
                         >
                             <div className={'finagraph-strongbox-link-modal__content-container'}>
-                                {!props.errorMsg && props.disabled && <LoadingIndicator active={true} overlayType={LoadingIndicator.OverlayType.Dark} />}
+                                {!props.errorMsg && props.disabled && <LoadingIndicator active={true} overlayType={OverlayType.Dark} />}
                                 {!!props.errorMsg && RenderErrorState()}
                                 {!props.errorMsg && !!props.isWorking && RenderWorkingState()}
                                 {!(props.errorMsg || props.isWorking) && props.authorized && GetAuthorizedContent()}

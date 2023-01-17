@@ -1,7 +1,8 @@
 import './StrongboxModal.scss';
 
 import * as React from 'react';
-//import * as ReactModal from 'react-modal';
+import { PropsWithChildren } from 'react';
+
 import { Styles } from 'react-modal';
 import ReactModal from 'react-modal';
 
@@ -19,7 +20,7 @@ interface IStrongboxModalProps {
 
 type Props = IStrongboxModalProps;
 
-export class StrongboxModal extends React.Component<Props> {
+export class StrongboxModal extends React.Component<Props & PropsWithChildren> {
     public static defaultProps = {
         containerClassName: '',
         closeOnEscape: true,

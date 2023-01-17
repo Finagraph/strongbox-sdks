@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { PropsWithChildren } from 'react';
 
 import './StrongboxModal.scss';
 
@@ -24,7 +25,7 @@ interface ISimpleModalProps {
     title?: string;
 }
 
-export const SimpleModal: React.SFC<ISimpleModalProps> = (props): JSX.Element => {
+export const SimpleModal: React.FC<ISimpleModalProps & PropsWithChildren> = (props): React.ReactElement => {
     let titleStyle = BuildThemeStyle(
         {},
         {

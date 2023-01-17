@@ -7,11 +7,6 @@ import { TextContent } from '../Text/TextContent';
 import { defaultControlStyleMap } from '../Models/Theme/ThemeControls';
 import { defaultControlPaletteStyleMap } from '../Models/Theme/ThemePalette';
 
-import { ThemeProvider } from '@material-ui/core/styles';
-
-import { CreateCustomTheme } from '../Utils/Style';
-import { sbxCheckboxPrimary, sbxCheckboxSecondary, termsOfUseUrl } from '../Utils/Constants';
-
 import IntroBanner from './IntroBanner';
 
 export type ErrorState = {

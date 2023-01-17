@@ -1,10 +1,11 @@
 import '../../styles.scss';
 
 import * as React from 'react';
+import { PropsWithChildren } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@mui/material/legacy/CircularProgress';
 
-enum OverlayType {
+export enum OverlayType {
     None = 'none',
     Dark = 'dark',
     Light = 'light',
@@ -22,47 +23,49 @@ interface ILoadingIndicatorProps {
     thickness?: number;
 }
 
-export class LoadingIndicator extends React.Component<ILoadingIndicatorProps> {
-    public static OverlayType = OverlayType;
-    public static defaultProps = {
-        active: false,
-        size: 40,
-        thickness: 6,
-        overlayTextClassName: '',
-        overlayType: OverlayType.None,
-        showSpinner: true,
-    };
+const LoadingIndicatorComponent: React.FC<ILoadingIndicatorProps & PropsWithChildren> = (props): React.ReactElement => {
+    const {
+        active,
+        children,
+        overlayStyle,
+        overlayText,
+        overlayTextClassName,
+        overlayType,
+        showSpinner,
+        size,
+        style,
+        thickness
 
-    public render() {
-        const {
-            active,
-            overlayStyle,
-            overlayType,
-            overlayTextClassName,
-            showSpinner,
-            size,
-            thickness,
-        } = this.props;
+    } = props;
 
-        let className = 'finagraph-strongbox-loading-overlay';
-        if (overlayType === OverlayType.Light) {
-            className += ' light';
-        } else if (overlayType === OverlayType.Dark) {
-            className += ' dark';
+    const [className, setClassName] = React.useState<string>('loadingOverlay');
+
+    React.useEffect(() => {
+        let newClassName = 'finagraph-strongbox-loading-overlay';
+
+        if (overlayType !== undefined) {
+            if (overlayType === OverlayType.Light) {
+                newClassName += ' light';
+            } else if (overlayType === OverlayType.Dark) {
+                newClassName += ' dark';
+            }
         }
 
-        return (
-            <div className={className} style={active ? overlayStyle : { display: 'none' }}>
-                {!!this.props.overlayText && (
-                    <div className={overlayTextClassName} style={{ marginBottom: 8 }}>
-                        {this.props.overlayText}
-                    </div>
-                )}
-                {showSpinner && <CircularProgress thickness={thickness} size={size} />}
-                {this.props.children}
-            </div>
-        );
-    }
+        setClassName(newClassName);
+    }, [overlayType]);
+
+
+    return (
+        <div className={className} style={active ? overlayStyle : { display: 'none' }}>
+            {!!overlayText && (
+                <div className={overlayTextClassName || ''} style={{ marginBottom: 8 }}>
+                    {overlayText}
+                </div>
+            )}
+            {(showSpinner !== false) && <CircularProgress style={style} thickness={thickness || 6} size={size || 40} />}
+            {children}
+        </div>
+    );
 }
 
-export default LoadingIndicator;
+export default LoadingIndicatorComponent;

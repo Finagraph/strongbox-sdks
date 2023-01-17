@@ -7,7 +7,7 @@ import { TextContent } from '../Text/TextContent';
 
 import { generalWindowBackground, paragraphText } from '../Models/Theme/Colors';
 
-import ContractIcon from '@material-ui/icons/ExpandLessRounded';
+import ContractIcon from '@mui/icons-material/ExpandLessRounded';
 
 export type IntroBannerProps = {
     theme?: Theme;
