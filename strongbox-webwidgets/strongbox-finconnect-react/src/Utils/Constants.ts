@@ -12,7 +12,7 @@ export const jsonHeaders = {
 export const fgConnectName = 'Finagraph Connect';
 export const fgConnectDownloadUrl = 'https://sbxnexusstgncus.blob.core.windows.net/setup/v2/qbd/default/FinagraphConnect.msi';
 
-export const termsOfUseUrl = 'https://www.finagraph.com/strongbox-terms';
+export const termsOfUseUrl = 'https://sbxfdppublicstgncus.blob.core.windows.net/docs/Strongbox.TermsOfService.pdf';
 
 export const headerConstants = {
     /**

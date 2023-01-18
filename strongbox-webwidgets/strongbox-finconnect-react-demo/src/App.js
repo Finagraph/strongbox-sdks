@@ -872,7 +872,7 @@ class App extends React.Component {
                                                             financialImportOptions={{
                                                                 mostRecentMonth: {
                                                                     month: 0,
-                                                                    year: 2021,
+                                                                    year: new Date().getFullYear(),
                                                                 },
                                                                 anonymizeCustomersAndVendors: true,
                                                                 transactionsPeriod: {
