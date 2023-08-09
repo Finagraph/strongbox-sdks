@@ -141,6 +141,7 @@ export type StrongboxImportRequest = {
     strongboxUri: string,
     submissionId?: string,
     connectionId: string,
+    initialMetadata?: ConsumerMetadata[];
 };
 
 export const LoadConnectWindow = (
@@ -360,7 +361,7 @@ export const ImportFinancials = async (
             reportingDate = toISOLocalDateString(new Date());
         }
 
-        let metadata: ConsumerMetadata[] | undefined = undefined;
+        let metadata: ConsumerMetadata[] | undefined = importRequest.initialMetadata;
 
         if (importRequest.submissionId) {
             metadata = [];
