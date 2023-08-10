@@ -364,7 +364,10 @@ export const ImportFinancials = async (
         let metadata: ConsumerMetadata[] | undefined = importRequest.initialMetadata;
 
         if (importRequest.submissionId) {
-            metadata = [];
+            // could still be undefined.
+            if (!metadata) {
+                metadata = [];
+            }
             metadata.push(new ConsumerMetadata({
                 label: 'SubmissionId',
                 value: importRequest.submissionId,
