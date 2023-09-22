@@ -30,6 +30,8 @@ export function AccountingPackageConnectPrompt(accountingPackage: AccountingPack
             return `${connectTo} FreeAgent`;
         case AccountingPackage.NetSuite:
             return `${connectTo} NetSuite`;
+        case AccountingPackage.MYOBBusiness:
+            return `${connectTo} MYOB Business`;
         default:
             return unknown;
     }
@@ -51,6 +53,8 @@ export function AccountingPackageName(accountingPackage: AccountingPackage): str
             return 'FreeAgent';
         case AccountingPackage.NetSuite:
             return 'NetSuite';
+        case AccountingPackage.MYOBBusiness:
+            return 'MYOB Business';
         default:
             return 'Unknown Accounting Package';
     }

@@ -5,6 +5,7 @@
     FreeAgent = "FreeAgent",
     FreshBooks = "FreshBooks",
     NetSuite = "NetSuite",
+    MYOBBusiness = "MYOBBusiness",
     QuickBooksDesktop = "QuickBooksDesktop",
     QuickBooksOnline = "QuickBooksOnline",
     SageIntacct = "SageIntacct",

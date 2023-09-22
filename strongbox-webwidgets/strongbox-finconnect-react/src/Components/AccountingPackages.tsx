@@ -40,6 +40,7 @@ import sageIntacctImg from '../Images/sageIntacct.png';
 import exampleImg from '../Images/DEX-LOGO.png';
 import freeAgentImg from '../Images/freeagent.png';
 import netSuiteImg from '../Images/netsuite.png';
+import myobImg from '../Images/myob.png';
 
 import '../styles.scss'
 
@@ -69,6 +70,8 @@ const GetButtonImage = (packageName: AccountingPackage): any => {
         result = freeAgentImg;
     } else if (packageName === AccountingPackage.NetSuite) {
         result = netSuiteImg;
+    } else if (packageName === AccountingPackage.MYOBBusiness) {
+        result = myobImg;
     }
 
     return result;

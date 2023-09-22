@@ -54,12 +54,14 @@ type State = {
     descriptionTextExample: string;
     descriptionTextFreeAgent: string;
     descriptionTextNetSuite: string;
+    descriptionTextMYOBBusiness: string;
     qbOneWay: string;
     sageIntacctOneWay: string;
     xeroOneWay: string;
     exampleOneWay: string;
     freeAgentOneWay: string;
     netSuiteOneWay: string;
+    myobBusinessOneWay: string;
     working: string;
     updateFinancialsNow: string;
     disconnect: string;
@@ -84,12 +86,14 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             descriptionTextExample: translations.LinkModalDescriptionExample,
             descriptionTextFreeAgent: translations.LinkModalDescriptionFreeAgent,
             descriptionTextNetSuite: translations.LinkModalDescriptionNetSuite,
+            descriptionTextMYOBBusiness: translations.LinkModalDescriptionMYOBBusiness,
             qbOneWay: translations.LinkModalQBOneWay,
             sageIntacctOneWay: translations.LinkModalSageIntacctOneWay,
             xeroOneWay: translations.LinkModalXeroOneWay,
             exampleOneWay: translations.LinkModalExampleOneWay,
             freeAgentOneWay: translations.LinkModalFreeAgentOneWay,
             netSuiteOneWay: translations.LinkModalNetSuiteOneWay,
+            myobBusinessOneWay: translations.LinkModalMYOBBusinessOneWay,
             working: translations.LinkModalWorking,
             updateFinancialsNow: translations.LinkModalUpdateFinancialsNow,
             disconnect: translations.DisconnectFromAccountingPkg,
@@ -360,6 +364,20 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         );
     }
 
+    private RenderConnectToMYOBBusiness = (props: StrongboxLinkerChildProps): React.ReactNode => {
+        return (
+            <>
+                <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextMYOBBusiness}</span>
+                <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
+                    {this.state.myobBusinessOneWay}
+                </span>
+                {props.renderAuthButton({
+                    className: 'finagraph-strongbox-linker__auth-button',
+                })}
+            </>
+        );
+    }
+
     private RenderAccountingPackage = (props: StrongboxLinkerChildProps): React.ReactNode => {
         if (this.props.accountingPackage === AccountingPackage.Xero) {
             return this.RenderConnectToXero(props);
@@ -375,6 +393,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToFreeAgent(props);
         } else if (this.props.accountingPackage === AccountingPackage.NetSuite) {
             return this.RenderConnectToNetSuite(props);
+        } else if (this.props.accountingPackage === AccountingPackage.MYOBBusiness) {
+            return this.RenderConnectToMYOBBusiness(props);
         } else {
             return (<span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>Unknown Accounting Package</span>);
         }
