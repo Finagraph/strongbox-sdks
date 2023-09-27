@@ -1,5 +1,4 @@
 ﻿export enum AccountingPackage {
-    AccountRightLive = "AccountRightLive",
     Dynamics365 = "Dynamics365",
     Example = "Example",
     FreeAgent = "FreeAgent",
