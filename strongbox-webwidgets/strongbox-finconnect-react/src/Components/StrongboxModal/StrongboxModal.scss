@@ -122,6 +122,11 @@ $cancelButtonTextColor: #2e2e2e;
         margin: 0 0 0 0;
         font-size: 16px;
     }
+
+    button:focus {
+        outline: 3px solid $inputBorder;
+        outline-offset: 1px;
+    }
 }
 
 .simple-modal__header {

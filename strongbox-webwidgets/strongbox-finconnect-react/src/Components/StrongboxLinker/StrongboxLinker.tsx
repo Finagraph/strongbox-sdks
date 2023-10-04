@@ -12,14 +12,11 @@ import { OverlayType } from '../LoadingIndicator/LoadingIndicator';
 
 import { ConnectionRequestDescriptor } from '../../Models/Api/strongbox.models';
 
-type ConnectButtonProps = {
-};
-
 export type StrongboxLinkerChildProps = {
     cxnRequest?: StrongboxConnectionRequest,
     authorized: boolean | undefined;
     disconnect: () => Promise<void>;
-    renderAuthButton: (props?: Partial<ConnectButtonProps>) => JSX.Element;
+    renderAuthButton: (idConnectButton: string) => JSX.Element;
     connectionInitiated: (existingConnectionId: string) => void;
     theme?: Theme;
     disabled?: boolean;
@@ -115,7 +112,7 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
         );
     }
 
-    private RenderAuthButton = (props?: Partial<ConnectButtonProps>): JSX.Element => {
+    private RenderAuthButton = (idConnectButton: string): JSX.Element => {
         const { datasourceId } = this.props;
 
         return (
@@ -129,6 +126,7 @@ class StrongboxLinker extends React.PureComponent<Props, State> {
                     onClick={() => {
                         this.AuthorizeConnection();
                     }}
+                    idButton={idConnectButton}
                 />
             </div>
         );

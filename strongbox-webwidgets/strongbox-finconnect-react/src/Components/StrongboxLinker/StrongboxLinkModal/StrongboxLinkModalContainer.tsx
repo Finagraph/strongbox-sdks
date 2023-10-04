@@ -25,7 +25,7 @@ export interface IStrongboxLinkModalContainerProps {
     isAuthorized?: boolean;
     checkAuthorizationStatus?: boolean;
     executeConnect: (accountingPackage: AccountingPackage, connectionRequestId: string, connectionWindowHandle: Window | undefined) => void;
-    executeDisconnect?: () => void;
+    executeDisconnect?: (disconnected: () => void) => void;
     onRequestClose?: (success: boolean) => void;
     disabled?: boolean;
     errorMsg?: string;

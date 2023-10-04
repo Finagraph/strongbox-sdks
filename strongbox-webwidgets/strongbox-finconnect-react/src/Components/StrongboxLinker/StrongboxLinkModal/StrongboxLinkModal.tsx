@@ -37,7 +37,7 @@ type Props = {
     theme?: Theme;
     updateProgress: (progress: number) => void;
     executeConnect: (accountingPackage: AccountingPackage, connectionRequestId: string, connectionWindowHandle: Window | undefined) => void;
-    executeDisconnect?: () => void;
+    executeDisconnect?: (disconnected: () => void) => void;
     isAuthorized?: boolean;
     checkAuthorizationStatus?: boolean;
     disabled?: boolean;
@@ -65,7 +65,10 @@ type State = {
     working: string;
     updateFinancialsNow: string;
     disconnect: string;
+    setAutoFocus: boolean;
 };
+
+const idConnectToAccountingSystemButton = 'connectToAccountingSystemButton';
 
 class StrongboxLinkModal extends React.PureComponent<Props, State> {
     public static defaultProps = {
@@ -97,6 +100,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             working: translations.LinkModalWorking,
             updateFinancialsNow: translations.LinkModalUpdateFinancialsNow,
             disconnect: translations.DisconnectFromAccountingPkg,
+            setAutoFocus: false,
         }
 
         this.RenderAccountingPackage = this.RenderAccountingPackage.bind(this);
@@ -145,7 +149,20 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 working: this.props.textContent.TextValue('LinkModalWorking'),
                 updateFinancialsNow: this.props.textContent.TextValue('LinkModalUpdateFinancialsNow'),
                 disconnect: this.props.textContent.TextValue('DisconnectFromAccountingPkg'),
+                setAutoFocus: true,
             });
+        }
+    }
+
+    public componentDidUpdate(prevProps) {
+        if (this.state.setAutoFocus) {
+            const connectButton = document.getElementById(idConnectToAccountingSystemButton);
+            if (connectButton !== null) {
+                connectButton.focus();
+                this.setState({
+                    setAutoFocus: false,
+                });
+            }
         }
     }
 
@@ -164,7 +181,13 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 datasourceId={this.props.accountingPackage}
                 theme={this.props.theme}
                 executeConnect={this.props.executeConnect}
-                executeDisconnect={this.props.executeDisconnect}
+                executeDisconnect={() => {
+                    this.props.executeDisconnect && this.props.executeDisconnect(() => {
+                        this.setState({
+                            setAutoFocus: true,
+                        })
+                    })
+                }}
                 isAuthorized={this.props.isAuthorized}
                 errorMsg={this.props.errorMsg}
                 isWorking={this.props.isWorking}
@@ -185,6 +208,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                                     props.disconnect();
                                 }}
                                 disabled={!this.props.errorMsg && this.props.disabled}
+                                tabIndex={1}
                             >
                                 {this.state.disconnect}
                             </button>,
@@ -203,6 +227,9 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                                         props.connectionInitiated((this.props.cxnRequest && this.props.cxnRequest.existingConnectionId) || (''));
                                     }}
                                     disabled={this.props.disabled}
+                                    tabIndex={1}
+                                    id={idConnectToAccountingSystemButton}
+                                    autoFocus={true}
                                 >
                                     {this.state.updateFinancialsNow}
                                 </button>
@@ -273,9 +300,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.qbOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -287,9 +312,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.qbOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -301,9 +324,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.sageIntacctOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -315,9 +336,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.xeroOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -329,9 +348,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.exampleOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -343,9 +360,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.freeAgentOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -357,9 +372,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.netSuiteOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }
@@ -371,9 +384,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
                 <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
                     {this.state.myobBusinessOneWay}
                 </span>
-                {props.renderAuthButton({
-                    className: 'finagraph-strongbox-linker__auth-button',
-                })}
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
             </>
         );
     }

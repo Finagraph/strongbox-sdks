@@ -249,13 +249,14 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
         });
     }
 
-    private ExecuteDisconnect(): void {
+    private ExecuteDisconnect(disconnectComplete: () => void): void {
         if (!!(this.state.cxnRequestWithId && this.state.cxnRequestWithId.existingConnectionId) &&
             !!(this.state.cxnRequestWithId && this.state.cxnRequestWithId.delegatedAccessToken)) {
             DisconnectConnection(this.state.cxnRequestWithId)
                 .then(disconnected => {
                     this.props.onDisconnection && this.props.onDisconnection(disconnected);
                     this.InitState();
+                    disconnectComplete();
                 })
                 .catch(error => {
                     this.props.onDisconnection && this.props.onDisconnection(false);

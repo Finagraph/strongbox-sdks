@@ -208,6 +208,11 @@ $disabledButtonOpacity: 0.3;
         cursor: pointer;
     }
 
+    .finagraph-strongbox-accounting-pkg-connect-button:focus {
+        outline: 3px solid #707070;
+        outline-offset: 1px;
+    }
+
     img {
         height: 34px;
         width: 206px;
