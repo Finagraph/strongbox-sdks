@@ -20,40 +20,40 @@ type Props = {
 export const ConnectButton: React.FC<Props> = (props): React.ReactElement => {
     // TODO:  Handle hover case for button and images.
     let buttonImg;
-    let connectButtonDescription = 'connect to accounting system';
+    let connectButtonDescription = 'Connect to accounting system';
 
     switch (props.datasourceId.toLowerCase()) {
         case 'quickbooksonline':
             buttonImg = qbConnectImg;
-            connectButtonDescription = 'connect to quickbooks online';
+            connectButtonDescription = 'Connect to QuickBooks Online';
             break;
         case 'quickbooksdesktop':
             buttonImg = qbConnectImg;
-            connectButtonDescription = 'connect to quickbooks desktop';
+            connectButtonDescription = 'Connect to QuickBooks Desktop';
             break;
         case 'xero':
             buttonImg = xeroImg;
-            connectButtonDescription = 'connect to xero';
+            connectButtonDescription = 'Connect to Xero';
             break;
         case 'sageintacct':
             buttonImg = sageIntacctImg;
-            connectButtonDescription = 'connect to sageintacct';
+            connectButtonDescription = 'Connect to SageIntacct';
             break;
         case 'example':
             buttonImg = exampleImg;
-            connectButtonDescription = 'connect to dex';
+            connectButtonDescription = 'Connect to DEX';
             break;
         case 'freeagent':
             buttonImg = freeAgentImg;
-            connectButtonDescription = 'connect to freeagent';
+            connectButtonDescription = 'Connect to FreeAgent';
             break;
         case 'netsuite':
             buttonImg = netSuiteImg;
-            connectButtonDescription = 'connect to netsuite';
+            connectButtonDescription = 'Connect to NetSuite';
             break;
         case 'myobbusiness':
             buttonImg = myobImg
-            connectButtonDescription = 'connect to myob';
+            connectButtonDescription = 'Connect to MYOB';
             break;
     }
 
@@ -66,7 +66,7 @@ export const ConnectButton: React.FC<Props> = (props): React.ReactElement => {
                 id={props.idButton}
                 tabIndex={1}
             >
-                {buttonImg ? (<img src={buttonImg} alt={connectButtonDescription} />) : ('Connect')}
+                {buttonImg ? (<img src={buttonImg} aria-label={connectButtonDescription} />) : ('Connect')}
             </button>
         </div>
     );
