@@ -58,10 +58,19 @@ $cancelButtonTextColor: #2e2e2e;
         right: $modalPadding;
         top: $modalPadding;
         cursor: pointer;
+        background-color: transparent;
+        color: $textGray;
+        padding: 3px 3px 0px 3px;
+        border: none;
     }
 
     .finagraph-strongbox-modal__close:hover {
         color: darken($textGray, 10);
+    }
+
+    .finagraph-strongbox-modal__close:focus {
+        outline: 3px solid $inputBorder;
+        outline-offset: 1px;
     }
 
     .finagraph-strongbox-modal__actions {

@@ -96,7 +96,18 @@ export const SimpleModal: React.FC<ISimpleModalProps & PropsWithChildren> = (pro
                         <h1 style={titleStyle} className={'simple-modal__title'}>{props.title}</h1>
                     )}
                     {(props.onCancel || props.onClose) && (
-                        <i className={'material-icons finagraph-strongbox-modal__close'} onClick={props.onCancel || props.onClose}>close</i>
+                        <button
+                            tabIndex={1}
+                            onClick={props.onCancel || props.onClose}
+                            className={'finagraph-strongbox-modal__close'}
+                            name={'cancel'}
+                        >
+                            <i
+                                className={'material-icons'}
+                            >
+                                close
+                            </i>
+                        </button>
                     )}
                 </header>
             )}
@@ -110,6 +121,7 @@ export const SimpleModal: React.FC<ISimpleModalProps & PropsWithChildren> = (pro
                             className={props.cancelButtonClassName}
                             disabled={props.disableActions}
                             onClick={props.onCancel}
+                            tabIndex={2}
                         >
                             {props.onCancelLabel}
                         </button>
@@ -120,6 +132,7 @@ export const SimpleModal: React.FC<ISimpleModalProps & PropsWithChildren> = (pro
                             className={props.submitButtonClassName}
                             disabled={props.disableActions}
                             onClick={props.onComplete}
+                            tabIndex={3}
                         >
                             {props.onCompleteLabel}
                         </button>
