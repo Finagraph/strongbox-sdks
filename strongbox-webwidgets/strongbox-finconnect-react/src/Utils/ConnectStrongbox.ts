@@ -292,6 +292,9 @@ export const ConnectAccountingSystem = async (
 
                     if ((cxnStatus) && (cxnStatus.status === "Success")) {
                         success = true;
+                    } else if ((cxnStatus) && (cxnStatus.status === "Error")) {
+                        onError && cxnStatus.errorDescription && onError('UnableToConnect', cxnStatus.errorDescription);
+                        complete = true;
                     } else if ((windowClosedStatus) || ((cxnStatus) && (cxnStatus.errorCode !== 'None'))) {
                         complete = true;
                     } else {
