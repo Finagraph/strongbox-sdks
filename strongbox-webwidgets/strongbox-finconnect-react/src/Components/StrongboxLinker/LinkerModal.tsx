@@ -204,7 +204,7 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
 
     private OnImportError(msg: string, detailedMsg: string): void {
         this.setState({
-            errorText: msg,
+            errorText: !!detailedMsg ? detailedMsg : msg,
         });
     }
 
