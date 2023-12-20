@@ -10,9 +10,12 @@ export type DesktopAuthResponse = {
 export function AccountingPackageConnectPrompt(accountingPackage: AccountingPackage, textContent?: TextContent): string {
     let connectTo = translations.ConnectToAccountingPkg;
     let unknown = translations.UnknownAccountingPkg;
+    let uploadText = translations.UnknownAccountingPkg;
+
     if (textContent) {
         connectTo = textContent.TextValue('ConnectToAccountingPkg');
         unknown = textContent.TextValue('UnknownAccountingPkg');
+        uploadText = textContent.TextValue('ConnectWithFileUpload');
     }
 
     switch (accountingPackage) {
@@ -32,6 +35,8 @@ export function AccountingPackageConnectPrompt(accountingPackage: AccountingPack
             return `${connectTo} NetSuite`;
         case AccountingPackage.MYOBBusiness:
             return `${connectTo} MYOB Business`;
+        case AccountingPackage.FileUpload:
+            return uploadText;
         default:
             return unknown;
     }
@@ -55,6 +60,8 @@ export function AccountingPackageName(accountingPackage: AccountingPackage): str
             return 'NetSuite';
         case AccountingPackage.MYOBBusiness:
             return 'MYOB Business';
+        case AccountingPackage.FileUpload:
+            return 'Upload Excel Template';
         default:
             return 'Unknown Accounting Package';
     }

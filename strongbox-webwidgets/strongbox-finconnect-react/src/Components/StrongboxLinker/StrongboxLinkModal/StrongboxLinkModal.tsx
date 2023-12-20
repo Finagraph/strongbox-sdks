@@ -55,6 +55,7 @@ type State = {
     descriptionTextFreeAgent: string;
     descriptionTextNetSuite: string;
     descriptionTextMYOBBusiness: string;
+    descriptionTextFileUpload: string;
     qbOneWay: string;
     sageIntacctOneWay: string;
     xeroOneWay: string;
@@ -62,6 +63,7 @@ type State = {
     freeAgentOneWay: string;
     netSuiteOneWay: string;
     myobBusinessOneWay: string;
+    fileUploadOneWay: string;
     working: string;
     updateFinancialsNow: string;
     disconnect: string;
@@ -90,6 +92,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             descriptionTextFreeAgent: translations.LinkModalDescriptionFreeAgent,
             descriptionTextNetSuite: translations.LinkModalDescriptionNetSuite,
             descriptionTextMYOBBusiness: translations.LinkModalDescriptionMYOBBusiness,
+            descriptionTextFileUpload: translations.LinkModalDescriptionFileUpload,
             qbOneWay: translations.LinkModalQBOneWay,
             sageIntacctOneWay: translations.LinkModalSageIntacctOneWay,
             xeroOneWay: translations.LinkModalXeroOneWay,
@@ -97,6 +100,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             freeAgentOneWay: translations.LinkModalFreeAgentOneWay,
             netSuiteOneWay: translations.LinkModalNetSuiteOneWay,
             myobBusinessOneWay: translations.LinkModalMYOBBusinessOneWay,
+            fileUploadOneWay: translations.LinkModalFileUploadOneWay,
             working: translations.LinkModalWorking,
             updateFinancialsNow: translations.LinkModalUpdateFinancialsNow,
             disconnect: translations.DisconnectFromAccountingPkg,
@@ -109,6 +113,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         this.RenderConnectToSageIntacct = this.RenderConnectToSageIntacct.bind(this);
         this.RenderConnectToQuickBooksDesktop = this.RenderConnectToQuickBooksDesktop.bind(this);
         this.RenderConnectToExample = this.RenderConnectToExample.bind(this);
+        this.RenderConnectWithFileUpload = this.RenderConnectWithFileUpload.bind(this);
     }
 
     private _regularTextStyle: any = {};
@@ -317,6 +322,18 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         );
     }
 
+    private RenderConnectWithFileUpload = (props: StrongboxLinkerChildProps): React.ReactNode => {
+        return (
+            <>
+                <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextFileUpload}</span>
+                <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
+                    {this.state.fileUploadOneWay}
+                </span>
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
+            </>
+        );
+    }
+
     private RenderConnectToSageIntacct = (props: StrongboxLinkerChildProps): React.ReactNode => {
         return (
             <>
@@ -406,6 +423,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToNetSuite(props);
         } else if (this.props.accountingPackage === AccountingPackage.MYOBBusiness) {
             return this.RenderConnectToMYOBBusiness(props);
+        } else if (this.props.accountingPackage === AccountingPackage.FileUpload) {
+            return this.RenderConnectWithFileUpload(props);
         } else {
             return (<span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>Unknown Accounting Package</span>);
         }

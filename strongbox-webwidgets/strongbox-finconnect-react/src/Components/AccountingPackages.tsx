@@ -41,6 +41,7 @@ import exampleImg from '../Images/DEX-LOGO.png';
 import freeAgentImg from '../Images/freeagent.png';
 import netSuiteImg from '../Images/netsuite.png';
 import myobImg from '../Images/myob.png';
+import fileUploadImg from '../Images/fileupload.png';
 
 import '../styles.scss'
 
@@ -72,6 +73,8 @@ const GetButtonImage = (packageName: AccountingPackage): any => {
         result = netSuiteImg;
     } else if (packageName === AccountingPackage.MYOBBusiness) {
         result = myobImg;
+    } else if (packageName === AccountingPackage.FileUpload) {
+        result = fileUploadImg;
     }
 
     return result;
