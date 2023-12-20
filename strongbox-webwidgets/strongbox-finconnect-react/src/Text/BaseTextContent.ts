@@ -21,6 +21,7 @@
     Dismiss: string,
     ConnectToAccountingPkg: string,
     DisconnectFromAccountingPkg: string,
+    ConnectWithFileUpload: string,
     UnknownAccountingPkg: string,
     ConnectAccountingSystemDetailedError: string,
     ConnectAccountingSystemSummaryError: string,
@@ -38,6 +39,7 @@
     LinkModalDescriptionFreeAgent: string,
     LinkModalDescriptionNetSuite: string,
     LinkModalDescriptionMYOBBusiness: string,
+    LinkModalDescriptionFileUpload: string,
     LinkModalQBOneWay: string;
     LinkModalXeroOneWay: string;
     LinkModalSageIntacctOneWay: string;
@@ -45,6 +47,7 @@
     LinkModalFreeAgentOneWay: string;
     LinkModalNetSuiteOneWay: string;
     LinkModalMYOBBusinessOneWay: string;
+    LinkModalFileUploadOneWay: string;
     LinkModalWorking: string;
     LinkModalUpdateFinancialsNow: string;
     TermsDescriptionParagraph1PreSBX: string,
