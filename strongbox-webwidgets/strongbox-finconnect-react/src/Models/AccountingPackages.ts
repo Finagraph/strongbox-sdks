@@ -10,6 +10,7 @@
     SageIntacct = "SageIntacct",
     SageOne = "SageOne",
     Xero = "Xero",
+    FileUpload="FileUpload",
 }
 
 export type AccountingPkgPresentation = {

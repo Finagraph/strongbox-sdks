@@ -22,6 +22,7 @@ export const translations: BaseTextContent = {
     Continue: 'Continue',
     Dismiss: 'Dismiss',
     ConnectToAccountingPkg: 'Connect to',
+    ConnectWithFileUpload: 'Upload Excel Template',
     DisconnectFromAccountingPkg: 'Disconnect',
     UnknownAccountingPkg: 'Unknown Accounting Package',
     ConnectAccountingSystemDetailedError: 'Unable to connect with ${accountingPackage}, response status: ${responseStatus}',
@@ -41,14 +42,16 @@ export const translations: BaseTextContent = {
         'authorize a connection to Xero.',
     LinkModalDescriptionSageIntacct: 'After clicking \'Connect to Sage Intacct\', Sage will prompt you to ' +
         'authorize a connection to Sage Intacct.',
-    LinkModalDescriptionExample: 'After clicking \'Connect to DEX\', You will be prompted to ' +
+    LinkModalDescriptionExample: 'After clicking \'Connect to DEX\', you will be prompted to ' +
         'authorize a connection to DEX.',
-    LinkModalDescriptionFreeAgent: 'After clicking \'Connect to FreeAgent\', You will be prompted to ' +
+    LinkModalDescriptionFreeAgent: 'After clicking \'Connect to FreeAgent\', you will be prompted to ' +
         'authorize a connection to FreeAgent.',
-    LinkModalDescriptionNetSuite: 'After clicking \'Connect to NetSuite\', You will be prompted to ' +
+    LinkModalDescriptionNetSuite: 'After clicking \'Connect to NetSuite\', you will be prompted to ' +
         'authorize a connection to NetSuite.',
-    LinkModalDescriptionMYOBBusiness: 'After clicking \'MYOB\', You will be prompted to ' +
+    LinkModalDescriptionMYOBBusiness: 'After clicking \'MYOB\', you will be prompted to ' +
         'authorize a connection to MYOB Business.',
+    LinkModalDescriptionFileUpload: 'After clicking \'Upload\', you will be prompted to ' +
+        'select an Excel template file for upload.',
     LinkModalQBOneWay: 'Information in QuickBooks will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalXeroOneWay: 'Information in Xero will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalSageIntacctOneWay: 'Information in Sage Intacct will never be altered in any way. This is a fully secure, one-way data stream.',
@@ -56,6 +59,7 @@ export const translations: BaseTextContent = {
     LinkModalFreeAgentOneWay: 'Information in FreeAgent will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalNetSuiteOneWay: 'Information in NetSuite will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalMYOBBusinessOneWay: 'Information in MYOB Business will never be altered in any way. This is a fully secure, one-way data stream.',
+    LinkModalFileUploadOneWay: 'Information in your Excel template will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalWorking: 'Working...',
     LinkModalUpdateFinancialsNow: 'Update Financials Now',
     TermsDescriptionParagraph1PreSBX: '${partnerName} uses',

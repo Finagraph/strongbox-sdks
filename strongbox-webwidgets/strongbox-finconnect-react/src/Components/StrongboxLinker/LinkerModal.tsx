@@ -289,7 +289,8 @@ export class LinkerModal extends React.PureComponent<ISBLinkerModalProps, State>
             (accountingPackage === AccountingPackage.Example) ||
             (accountingPackage === AccountingPackage.FreeAgent) ||
             (accountingPackage === AccountingPackage.NetSuite) ||
-            (accountingPackage === AccountingPackage.MYOBBusiness)
+            (accountingPackage === AccountingPackage.MYOBBusiness) ||
+            (accountingPackage === AccountingPackage.FileUpload)
         ) {
             content = (
                 <StrongboxLinkModalContainer

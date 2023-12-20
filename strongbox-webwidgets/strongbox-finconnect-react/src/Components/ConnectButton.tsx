@@ -9,6 +9,7 @@ import exampleImg from '../Images/Connect/example.png';
 import freeAgentImg from '../Images/Connect/freeagent.png';
 import netSuiteImg from '../Images/Connect/netsuite.png';
 import myobImg from '../Images/Connect/myob.png';
+import fileuploadImg from '../Images/Connect/fileupload.png';
 
 type Props = {
     datasourceId: string;
@@ -52,8 +53,12 @@ export const ConnectButton: React.FC<Props> = (props): React.ReactElement => {
             connectButtonDescription = 'Connect to NetSuite';
             break;
         case 'myobbusiness':
-            buttonImg = myobImg
+            buttonImg = myobImg;
             connectButtonDescription = 'Connect to MYOB';
+            break;
+        case 'fileupload':
+            buttonImg = fileuploadImg;
+            connectButtonDescription = 'Upload an Excel template file';
             break;
     }
 
