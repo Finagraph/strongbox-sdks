@@ -42,11 +42,11 @@ import freeAgentImg from '../Images/freeagent.png';
 import netSuiteImg from '../Images/netsuite.png';
 import myobImg from '../Images/myob.png';
 import fileUploadImg from '../Images/fileupload.png';
+import dynamic365Img from '../Images/dynamics365.png';
 
 import '../styles.scss'
 
 import { AccountingPkgPresentation, AccountingPackage } from '../Models/AccountingPackages';
-import { Account } from '../Models/Api/strongbox.models';
 
 export type IAccountingPackageProps = {
     buttonsDisabled: boolean;
@@ -75,6 +75,8 @@ const GetButtonImage = (packageName: AccountingPackage): any => {
         result = myobImg;
     } else if (packageName === AccountingPackage.FileUpload) {
         result = fileUploadImg;
+    } else if (packageName === AccountingPackage.Dynamics365) {
+        result = dynamic365Img;
     }
 
     return result;

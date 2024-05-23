@@ -38,6 +38,7 @@
     LinkModalDescriptionExample: string,
     LinkModalDescriptionFreeAgent: string,
     LinkModalDescriptionNetSuite: string,
+    LinkModalDescriptionDynamics365: string,
     LinkModalDescriptionMYOBBusiness: string,
     LinkModalDescriptionFileUpload: string,
     LinkModalQBOneWay: string;
@@ -46,6 +47,7 @@
     LinkModalExampleOneWay: string;
     LinkModalFreeAgentOneWay: string;
     LinkModalNetSuiteOneWay: string;
+    LinkModalDynamics365OneWay: string;
     LinkModalMYOBBusinessOneWay: string;
     LinkModalFileUploadOneWay: string;
     LinkModalWorking: string;
