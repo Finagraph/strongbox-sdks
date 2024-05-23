@@ -35,6 +35,8 @@ export function AccountingPackageConnectPrompt(accountingPackage: AccountingPack
             return `${connectTo} NetSuite`;
         case AccountingPackage.MYOBBusiness:
             return `${connectTo} MYOB Business`;
+        case AccountingPackage.Dynamics365:
+            return `${connectTo} Microsoft Dynamics 365`;
         case AccountingPackage.FileUpload:
             return uploadText;
         default:
@@ -58,6 +60,8 @@ export function AccountingPackageName(accountingPackage: AccountingPackage): str
             return 'FreeAgent';
         case AccountingPackage.NetSuite:
             return 'NetSuite';
+        case AccountingPackage.Dynamics365:
+            return 'Microsoft Dynamics 365';
         case AccountingPackage.MYOBBusiness:
             return 'MYOB Business';
         case AccountingPackage.FileUpload:

@@ -10,6 +10,7 @@ import freeAgentImg from '../Images/Connect/freeagent.png';
 import netSuiteImg from '../Images/Connect/netsuite.png';
 import myobImg from '../Images/Connect/myob.png';
 import fileuploadImg from '../Images/Connect/fileupload.png';
+import dynamics365Img from '../Images/Connect/dynamics365.png';
 
 type Props = {
     datasourceId: string;
@@ -55,6 +56,10 @@ export const ConnectButton: React.FC<Props> = (props): React.ReactElement => {
         case 'myobbusiness':
             buttonImg = myobImg;
             connectButtonDescription = 'Connect to MYOB';
+            break;
+        case 'dynamics365':
+            buttonImg = dynamics365Img;
+            connectButtonDescription = 'Connect to Microsoft Dynamics 365';
             break;
         case 'fileupload':
             buttonImg = fileuploadImg;
