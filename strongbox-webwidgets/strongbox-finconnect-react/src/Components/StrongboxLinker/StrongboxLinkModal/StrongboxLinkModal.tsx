@@ -54,6 +54,7 @@ type State = {
     descriptionTextExample: string;
     descriptionTextFreeAgent: string;
     descriptionTextNetSuite: string;
+    descriptionTextDynamics365: string;
     descriptionTextMYOBBusiness: string;
     descriptionTextFileUpload: string;
     qbOneWay: string;
@@ -62,6 +63,7 @@ type State = {
     exampleOneWay: string;
     freeAgentOneWay: string;
     netSuiteOneWay: string;
+    dynamics365OneWay: string;
     myobBusinessOneWay: string;
     fileUploadOneWay: string;
     working: string;
@@ -91,6 +93,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             descriptionTextExample: translations.LinkModalDescriptionExample,
             descriptionTextFreeAgent: translations.LinkModalDescriptionFreeAgent,
             descriptionTextNetSuite: translations.LinkModalDescriptionNetSuite,
+            descriptionTextDynamics365: translations.LinkModalDescriptionDynamics365,
             descriptionTextMYOBBusiness: translations.LinkModalDescriptionMYOBBusiness,
             descriptionTextFileUpload: translations.LinkModalDescriptionFileUpload,
             qbOneWay: translations.LinkModalQBOneWay,
@@ -99,6 +102,7 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             exampleOneWay: translations.LinkModalExampleOneWay,
             freeAgentOneWay: translations.LinkModalFreeAgentOneWay,
             netSuiteOneWay: translations.LinkModalNetSuiteOneWay,
+            dynamics365OneWay: translations.LinkModalDynamics365OneWay,
             myobBusinessOneWay: translations.LinkModalMYOBBusinessOneWay,
             fileUploadOneWay: translations.LinkModalFileUploadOneWay,
             working: translations.LinkModalWorking,
@@ -394,6 +398,18 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
         );
     }
 
+    private RenderConnectToDynamics365 = (props: StrongboxLinkerChildProps): React.ReactNode => {
+        return (
+            <>
+                <span style={this._regularTextStyle} className={'finagraph-strongbox-linker__description secondary'}>{this.state.descriptionTextDynamics365}</span>
+                <span style={this._securityTextStyle} className={'finagraph-strongbox-linker__connect-graphic-description secondary'}>
+                    {this.state.dynamics365OneWay}
+                </span>
+                {props.renderAuthButton(idConnectToAccountingSystemButton)}
+            </>
+        );
+    }
+
     private RenderConnectToMYOBBusiness = (props: StrongboxLinkerChildProps): React.ReactNode => {
         return (
             <>
@@ -421,6 +437,8 @@ class StrongboxLinkModal extends React.PureComponent<Props, State> {
             return this.RenderConnectToFreeAgent(props);
         } else if (this.props.accountingPackage === AccountingPackage.NetSuite) {
             return this.RenderConnectToNetSuite(props);
+        } else if (this.props.accountingPackage === AccountingPackage.Dynamics365) {
+            return this.RenderConnectToDynamics365(props);
         } else if (this.props.accountingPackage === AccountingPackage.MYOBBusiness) {
             return this.RenderConnectToMYOBBusiness(props);
         } else if (this.props.accountingPackage === AccountingPackage.FileUpload) {

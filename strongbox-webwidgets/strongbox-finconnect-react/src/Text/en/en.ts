@@ -48,6 +48,8 @@ export const translations: BaseTextContent = {
         'authorize a connection to FreeAgent.',
     LinkModalDescriptionNetSuite: 'After clicking \'Connect to NetSuite\', you will be prompted to ' +
         'authorize a connection to NetSuite.',
+    LinkModalDescriptionDynamics365: 'After clicking \'Connect to Microsoft Dynamics 365\', you will be prompted to ' +
+        'authorize a connection to Dynamics 365.',
     LinkModalDescriptionMYOBBusiness: 'After clicking \'MYOB\', you will be prompted to ' +
         'authorize a connection to MYOB Business.',
     LinkModalDescriptionFileUpload: 'After clicking \'Upload\', you will be prompted to ' +
@@ -58,6 +60,7 @@ export const translations: BaseTextContent = {
     LinkModalExampleOneWay: 'Information in DEX will never be altered in any way. This is a fully secure, one-way data stream.', 
     LinkModalFreeAgentOneWay: 'Information in FreeAgent will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalNetSuiteOneWay: 'Information in NetSuite will never be altered in any way. This is a fully secure, one-way data stream.',
+    LinkModalDynamics365OneWay: 'Information in Dynamics 365 will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalMYOBBusinessOneWay: 'Information in MYOB Business will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalFileUploadOneWay: 'Information in your Excel template will never be altered in any way. This is a fully secure, one-way data stream.',
     LinkModalWorking: 'Working...',
